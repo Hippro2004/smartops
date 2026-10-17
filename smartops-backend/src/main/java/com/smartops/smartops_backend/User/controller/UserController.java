@@ -3,7 +3,8 @@ package com.smartops.smartops_backend.User.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.smartops.smartops_backend.User.dtos.RequestLogin;
+import com.smartops.smartops_backend.User.dtos.RequestRegister;
+import com.smartops.smartops_backend.User.dtos.UserResponse;
 import com.smartops.smartops_backend.User.entities.User;
 import com.smartops.smartops_backend.User.services.UserService;
 
@@ -22,18 +23,21 @@ public class UserController {
 
     private final UserService userService;
 
-    // @PostMapping("/login")
-    // public ResponseEntity<User> login(@RequestBody @Validated RequestLogin
-    // requestLogin) {
-    // try {
+    @PostMapping("/register")
+    public ResponseEntity<UserResponse> registerUser(@RequestBody @Validated RequestRegister request) {
+        try {
 
-    // User user = userService.getUserByUsername(requestLogin.getUsername());
-    // if (user == null)
-    // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if (userService.existsByUsername(request.getUsername())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            }
 
-    // } catch (Exception e) {
-    // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
-    // }
+            User create = userService.save(request);
+
+            UserResponse body = new UserResponse(create.getUsername());
+            return ResponseEntity.status(HttpStatus.CREATED).body(body);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
 }

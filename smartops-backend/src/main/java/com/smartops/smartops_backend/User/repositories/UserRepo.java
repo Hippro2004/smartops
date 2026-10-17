@@ -9,5 +9,7 @@ import com.smartops.smartops_backend.User.entities.User;
 public interface UserRepo extends JpaRepository<User, Long> {
     boolean existsByUsername(String username);
 
+    boolean existsByEmail(String username);
+
     Optional<User> findByUsername(String name);
 }
