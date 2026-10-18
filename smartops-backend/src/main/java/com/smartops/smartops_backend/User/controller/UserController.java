@@ -1,6 +1,5 @@
 package com.smartops.smartops_backend.User.controller;
 
-import com.smartops.smartops_backend.User.repositories.UserRepo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
