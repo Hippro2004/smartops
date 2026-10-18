@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:smartops_mobile/api/api_error.dart';
+import 'package:smartops_mobile/api/error_message.dart';
 import 'package:smartops_mobile/models/user_model.dart';
 import 'package:smartops_mobile/services/user_service.dart';
 
@@ -15,6 +17,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late final TextEditingController _emailController;
 
   bool _isLoading = false;
+  String? _formError;
+  Map<String, String> _fieldErrors = {};
 
   final UserService _userService = UserService();
 
@@ -36,15 +40,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _handleRegister() async {
     setState(() {
+      _fieldErrors = {};
+      _formError = null;
       _isLoading = true;
     });
 
     try {
-      bool success = await _userService.registerUser(
+      String success = await _userService.registerUser(
         User(
-          username: _usernameController.text,
+          username: _usernameController.text.trim(),
           password: _passwordController.text,
-          email: _emailController.text,
+          email: _emailController.text.trim(),
         ),
       );
 
@@ -52,14 +58,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            success ? "สมัครสมาชิกสำเร็จ!" : "สมัครสมาชิกไม่สำเร็จ!",
-          ),
-          backgroundColor: success ? Colors.green : Colors.red,
+          content: Text('สมัครสมาชิกสำเร็จ!'),
+          backgroundColor: Colors.green,
         ),
       );
-    } catch (e) {
-      rethrow;
+    } on ApiError catch (e) {
+      if (!mounted) return;
+      setState(() {
+        switch (e.code) {
+          case 'USERNAME_TAKEN':
+            _fieldErrors = {'username': messageFor(e.code)};
+            break;
+          case 'EMAIL_TAKEN':
+            _fieldErrors = {'email': messageFor(e.code)};
+            break;
+          case 'VALIDATION_FAILED':
+            _fieldErrors = e.fieldErrors; // {email: "...", password: "..."}
+            break;
+          default:
+            _formError = messageFor(e.code);
+        }
+      });
     } finally {
       if (mounted) {
         setState(() {
@@ -95,6 +114,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               decoration: InputDecoration(labelText: 'Password'),
             ),
             SizedBox(height: 24),
+
+            if (_formError != null) ...[
+              Text(
+                _formError!,
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
+              SizedBox(height: 12),
+            ],
 
             _isLoading
                 ? CircularProgressIndicator()
