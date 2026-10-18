@@ -16,7 +16,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   bool _isLoading = false;
 
-  late final UserService _userService;
+  final UserService _userService = UserService();
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameController = TextEditingController();
+    _passwordController = TextEditingController();
+    _emailController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
 
   void _handleRegister() async {
     setState(() {
@@ -51,22 +67,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         });
       }
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _usernameController = TextEditingController();
-    _passwordController = TextEditingController();
-    _emailController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
-    _emailController.dispose();
-    super.dispose();
   }
 
   @override

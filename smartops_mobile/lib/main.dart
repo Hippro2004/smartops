@@ -15,7 +15,37 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SmartOps Mobile',
-      home: RegisterScreen(),
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("SmartOps Home")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterScreen()),
+                );
+              },
+              child: Text("ไปหน้าสมัครสมาชิก"),
+            ),
+
+            SizedBox(height: 16),
+          ],
+        ),
+      ),
     );
   }
 }
