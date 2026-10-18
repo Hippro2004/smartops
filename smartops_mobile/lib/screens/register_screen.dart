@@ -40,13 +40,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _handleRegister() async {
     setState(() {
-      _fieldErrors = {};
+      _fieldErrors;
       _formError = null;
       _isLoading = true;
     });
 
     try {
-      String success = await _userService.registerUser(
+      await _userService.registerUser(
         User(
           username: _usernameController.text.trim(),
           password: _passwordController.text,
@@ -99,19 +99,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: [
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
+              decoration: InputDecoration(
+                labelText: 'Username',
+                errorText: _fieldErrors["username"],
+              ),
             ),
             SizedBox(height: 12),
 
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(
+                labelText: 'Email',
+                errorText: _fieldErrors["email"],
+              ),
             ),
             SizedBox(height: 12),
 
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                errorText: _fieldErrors["password"],
+              ),
             ),
             SizedBox(height: 24),
 

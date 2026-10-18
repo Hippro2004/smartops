@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:smartops_mobile/api/api_error.dart';
 import 'package:smartops_mobile/core/dio_client.dart';
