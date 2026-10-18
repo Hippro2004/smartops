@@ -1,5 +1,7 @@
 package com.smartops.smartops_backend.User.dtos;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +13,14 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RequestRegister {
 
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String password;
+
+    @NotBlank
+    @Email
     private String email;
 
 }
