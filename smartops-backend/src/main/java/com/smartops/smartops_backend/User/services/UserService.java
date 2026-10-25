@@ -1,14 +1,14 @@
-package com.smartops.smartops_backend.User.services;
+package com.smartops.smartops_backend.user.services;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.smartops.smartops_backend.User.dtos.RequestRegister;
-import com.smartops.smartops_backend.User.entities.User;
-import com.smartops.smartops_backend.User.repositories.UserRepo;
 import com.smartops.smartops_backend.common.exceptions.BusinessException;
 import com.smartops.smartops_backend.common.exceptions.ErrorCode;
+import com.smartops.smartops_backend.user.dtos.RequestRegister;
+import com.smartops.smartops_backend.user.entities.User;
+import com.smartops.smartops_backend.user.repositories.UserRepo;
 
 import lombok.RequiredArgsConstructor;
 

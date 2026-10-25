@@ -1,4 +1,4 @@
-package com.smartops.smartops_backend.User.entities;
+package com.smartops.smartops_backend.user.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,5 +33,17 @@ public class User {
 
     @Column(nullable = false, unique = true, length = 50)
     private String email;
+
+    @Column(nullable = false, length = 1)
+    private Integer gender;
+
+    @Column(nullable = false)
+    private String firstname;
+
+    @Column(nullable = false)
+    private String surname;
+
+    @Column(nullable = false)
+    private String contact;
 
 }

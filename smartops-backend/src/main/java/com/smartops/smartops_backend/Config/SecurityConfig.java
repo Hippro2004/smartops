@@ -1,4 +1,4 @@
-package com.smartops.smartops_backend.Config;
+package com.smartops.smartops_backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

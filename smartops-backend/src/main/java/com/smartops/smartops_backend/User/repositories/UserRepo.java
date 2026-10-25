@@ -1,10 +1,10 @@
-package com.smartops.smartops_backend.User.repositories;
+package com.smartops.smartops_backend.user.repositories;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.smartops.smartops_backend.User.entities.User;
+import com.smartops.smartops_backend.user.entities.User;
 
 public interface UserRepo extends JpaRepository<User, Long> {
     boolean existsByUsername(String username);

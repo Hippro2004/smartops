@@ -1,4 +1,4 @@
-package com.smartops.smartops_backend.User.dtos;
+package com.smartops.smartops_backend.user.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

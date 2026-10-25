@@ -1,7 +1,10 @@
-package com.smartops.smartops_backend.User.dtos;
+package com.smartops.smartops_backend.user.dtos;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,5 +27,10 @@ public class RequestRegister {
     @NotBlank
     @Email
     private String email;
+
+    @NotNull
+    @Min(0)
+    @Max(2)
+    private Integer gender;
 
 }

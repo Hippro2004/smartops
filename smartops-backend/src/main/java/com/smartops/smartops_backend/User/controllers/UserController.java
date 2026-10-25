@@ -1,13 +1,13 @@
-package com.smartops.smartops_backend.User.controller;
+package com.smartops.smartops_backend.user.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.smartops.smartops_backend.User.dtos.RequestLogin;
-import com.smartops.smartops_backend.User.dtos.RequestRegister;
-import com.smartops.smartops_backend.User.dtos.UserResponse;
-import com.smartops.smartops_backend.User.entities.User;
-import com.smartops.smartops_backend.User.services.UserService;
+import com.smartops.smartops_backend.user.dtos.RequestLogin;
+import com.smartops.smartops_backend.user.dtos.RequestRegister;
+import com.smartops.smartops_backend.user.dtos.UserResponse;
+import com.smartops.smartops_backend.user.entities.User;
+import com.smartops.smartops_backend.user.services.UserService;
 
 import lombok.RequiredArgsConstructor;
 
