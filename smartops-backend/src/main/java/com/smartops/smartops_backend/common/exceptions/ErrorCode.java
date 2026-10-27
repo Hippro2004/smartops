@@ -14,7 +14,12 @@ public enum ErrorCode {
 
     // --- PRODUCT ---
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "Product not found"),
-    PRODUCT_NAME_TAKEN(HttpStatus.CONFLICT, "My Name Product already exists");
+    PRODUCT_NAME_TAKEN(HttpStatus.CONFLICT, "My Name Product already exists"),
+
+    // --- PRODUCT TYPE ---
+    PRODUCT_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "Product type not found")
+
+    ;
 
     private final HttpStatus status;
     private final String message;

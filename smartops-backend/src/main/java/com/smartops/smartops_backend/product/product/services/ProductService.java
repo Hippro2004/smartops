@@ -10,6 +10,8 @@ import com.smartops.smartops_backend.common.exceptions.ErrorCode;
 import com.smartops.smartops_backend.product.product.dtos.RequestProduct;
 import com.smartops.smartops_backend.product.product.entities.Product;
 import com.smartops.smartops_backend.product.product.repositories.ProductRepo;
+import com.smartops.smartops_backend.product.type.entities.ProductType;
+import com.smartops.smartops_backend.product.type.services.ProductTypeService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class ProductService {
 
     private final ProductRepo productRepo;
+    private final ProductTypeService productTypeService;
 
     @Transactional
     public Product save(RequestProduct request) {
@@ -26,9 +29,12 @@ public class ProductService {
             throw new BusinessException(ErrorCode.PRODUCT_NAME_TAKEN);
         }
 
+        ProductType productType = productTypeService.getById(request.getProductTypeId());
+
         return productRepo.save(Product.builder()
                 .name(request.getName())
                 .image(request.getImage())
+                .productType(productType)
                 .build());
 
     }
