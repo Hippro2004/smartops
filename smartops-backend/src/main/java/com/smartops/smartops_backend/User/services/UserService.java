@@ -57,6 +57,10 @@ public class UserService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_CREDENTIALS));
     }
 
+    public User getProfileById(Long id) {
+        return userRepo.findById(id).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+    }
+
     // public boolean authenticate(String username, String rawPassword) {
     // User user = getUserByUsername(username);
     // if (user == null) {

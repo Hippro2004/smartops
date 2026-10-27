@@ -1,4 +1,4 @@
-package com.smartops.smartops_backend.product.type.entities;
+package com.smartops.smartops_backend.productType.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

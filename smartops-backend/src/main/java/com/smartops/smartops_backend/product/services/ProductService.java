@@ -1,4 +1,4 @@
-package com.smartops.smartops_backend.product.product.services;
+package com.smartops.smartops_backend.product.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,11 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.smartops.smartops_backend.common.exceptions.BusinessException;
 import com.smartops.smartops_backend.common.exceptions.ErrorCode;
-import com.smartops.smartops_backend.product.product.dtos.RequestProduct;
-import com.smartops.smartops_backend.product.product.entities.Product;
-import com.smartops.smartops_backend.product.product.repositories.ProductRepo;
-import com.smartops.smartops_backend.product.type.entities.ProductType;
-import com.smartops.smartops_backend.product.type.services.ProductTypeService;
+import com.smartops.smartops_backend.product.dtos.RequestProduct;
+import com.smartops.smartops_backend.product.entities.Product;
+import com.smartops.smartops_backend.product.repositories.ProductRepo;
+import com.smartops.smartops_backend.productType.entities.ProductType;
+import com.smartops.smartops_backend.productType.services.ProductTypeService;
 
 import lombok.RequiredArgsConstructor;
 

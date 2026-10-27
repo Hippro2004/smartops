@@ -1,13 +1,13 @@
-package com.smartops.smartops_backend.product.product.controllers;
+package com.smartops.smartops_backend.product.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.smartops.smartops_backend.common.dto.PageResponse;
-import com.smartops.smartops_backend.product.product.dtos.ProductResponse;
-import com.smartops.smartops_backend.product.product.dtos.RequestProduct;
-import com.smartops.smartops_backend.product.product.entities.Product;
-import com.smartops.smartops_backend.product.product.services.ProductService;
+import com.smartops.smartops_backend.product.dtos.ProductResponse;
+import com.smartops.smartops_backend.product.dtos.RequestProduct;
+import com.smartops.smartops_backend.product.entities.Product;
+import com.smartops.smartops_backend.product.services.ProductService;
 
 import lombok.RequiredArgsConstructor;
 

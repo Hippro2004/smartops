@@ -1,4 +1,4 @@
-package com.smartops.smartops_backend.product.product.dtos;
+package com.smartops.smartops_backend.product.dtos;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
