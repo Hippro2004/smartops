@@ -39,6 +39,10 @@ public class ProductService {
 
     }
 
+    public Product getById(Long id) {
+        return productRepo.findById(id).orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
+    }
+
     public Page<Product> getList(Pageable pageable) {
         return productRepo.findAll(pageable);
     }

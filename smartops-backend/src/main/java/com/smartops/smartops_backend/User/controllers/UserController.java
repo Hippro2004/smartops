@@ -77,7 +77,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProfileResponse> getProfileUser(@PathVariable Long id, Authentication auth) {
-        User user = userService.getProfileById(id);
+        User user = userService.getById(id);
         return ResponseEntity.ok(new ProfileResponse(
                 user.getUsername(),
                 user.getEmail(),

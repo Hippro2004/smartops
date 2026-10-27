@@ -17,7 +17,12 @@ public enum ErrorCode {
     PRODUCT_NAME_TAKEN(HttpStatus.CONFLICT, "My Name Product already exists"),
 
     // --- PRODUCT TYPE ---
-    PRODUCT_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "Product type not found")
+    PRODUCT_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "Product type not found"),
+
+    PRODUCT_ALREADY_BORROWED(HttpStatus.CONFLICT, "Product is already borrowed"),
+
+    // --- BORROWRECORD ---
+    BORROW_NOT_FOUND(HttpStatus.NOT_FOUND, "Borrow not found")
 
     ;
 

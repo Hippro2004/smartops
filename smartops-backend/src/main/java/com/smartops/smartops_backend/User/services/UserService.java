@@ -57,7 +57,7 @@ public class UserService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_CREDENTIALS));
     }
 
-    public User getProfileById(Long id) {
+    public User getById(Long id) {
         return userRepo.findById(id).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 
