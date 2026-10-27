@@ -22,7 +22,7 @@ public class ProductService {
 
     @Transactional
     public Product save(RequestProduct request) {
-        if (productRepo.exexistsByName(request.getName())) {
+        if (productRepo.existsByName(request.getName())) {
             throw new BusinessException(ErrorCode.PRODUCT_NAME_TAKEN);
         }
 
