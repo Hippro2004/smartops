@@ -33,4 +33,13 @@ public class RequestRegister {
     @Max(2)
     private Integer gender;
 
+    @NotBlank
+    private String firstname;
+
+    @NotBlank
+    private String surname;
+
+    @NotBlank
+    private String contact;
+
 }

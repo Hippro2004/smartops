@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.smartops.smartops_backend.common.exceptions.BusinessException;
 import com.smartops.smartops_backend.common.exceptions.ErrorCode;
 import com.smartops.smartops_backend.user.dtos.RequestRegister;
+import com.smartops.smartops_backend.user.entities.Role;
 import com.smartops.smartops_backend.user.entities.User;
 import com.smartops.smartops_backend.user.repositories.UserRepo;
 
@@ -44,8 +45,13 @@ public class UserService {
 
         User createUser = User.builder()
                 .username(request.getUsername())
+                .role(Role.USER)
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .firstname(request.getFirstname())
+                .surname(request.getSurname())
+                .gender(request.getGender())
+                .contact(request.getContact())
                 .build();
 
         return userRepo.save(createUser);

@@ -31,7 +31,8 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<UserResponse> registerUser(@RequestBody @Validated RequestRegister request) {
         User created = userService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new UserResponse(created.getUsername()));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(UserResponse.builder().username(created.getUsername()).build());
 
         // try {
 
@@ -55,7 +56,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserResponse> loginUser(@RequestBody @Validated RequestLogin request) {
         User user = userService.login(request.getUsername(), request.getPassword());
-        return ResponseEntity.ok(new UserResponse(user.getUsername()));
+        return ResponseEntity.ok(new UserResponse(user.getUsername(), user.getRole().toString()));
 
         // try {
         // // User user = userService.getUserByUsername(request.getUsername());
