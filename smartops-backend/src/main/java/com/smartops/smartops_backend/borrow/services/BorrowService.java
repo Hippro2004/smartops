@@ -3,6 +3,8 @@ package com.smartops.smartops_backend.borrow.services;
 import java.time.Instant;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,6 +57,10 @@ public class BorrowService {
     public BorrowRecord getBorrowByUserIdAndProductId(Long userId, Long productId) {
         return borrowRepo.findByUserIdAndProductId(userId, productId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BORROW_NOT_FOUND));
+    }
+
+    public Page<BorrowRecord> getListBorrowByUserId(Long userId, Pageable pageable) {
+        return borrowRepo.findAllByUserIdOrderByBorrowedAtDesc(userId, pageable);
     }
 
 }
