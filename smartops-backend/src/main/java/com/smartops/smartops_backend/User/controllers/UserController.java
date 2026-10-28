@@ -56,7 +56,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserResponse> loginUser(@RequestBody @Validated RequestLogin request) {
         User user = userService.login(request.getUsername(), request.getPassword());
-        return ResponseEntity.ok(new UserResponse(user.getUsername(), user.getRole().toString()));
+        return ResponseEntity.ok(new UserResponse(user.getUsername(), user.getRoles().toString()));
 
         // try {
         // // User user = userService.getUserByUsername(request.getUsername());

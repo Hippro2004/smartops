@@ -1,5 +1,7 @@
 package com.smartops.smartops_backend.user.services;
 
+import java.util.Set;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +47,7 @@ public class UserService {
 
         User createUser = User.builder()
                 .username(request.getUsername())
-                .role(Role.USER)
+                .roles(Set.of(Role.USER))
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .firstname(request.getFirstname())
