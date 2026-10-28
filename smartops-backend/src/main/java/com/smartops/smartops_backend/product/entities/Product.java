@@ -35,6 +35,9 @@ public class Product {
     @Column(nullable = false)
     private String image;
 
+    @Column(nullable = false)
+    private Integer qty;
+
     @ManyToOne
     @JoinColumn(name = "product_type", nullable = false)
     private ProductType productType;
