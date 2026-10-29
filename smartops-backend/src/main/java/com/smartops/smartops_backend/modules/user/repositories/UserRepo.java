@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.smartops.smartops_backend.modules.user.entities.Role;
 import com.smartops.smartops_backend.modules.user.entities.User;
 
 public interface UserRepo extends JpaRepository<User, Long> {
