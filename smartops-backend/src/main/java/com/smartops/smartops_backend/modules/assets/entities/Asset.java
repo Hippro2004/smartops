@@ -1,4 +1,4 @@
-package com.smartops.smartops_backend.modules.product.entities;
+package com.smartops.smartops_backend.modules.assets.entities;
 
 import com.smartops.smartops_backend.modules.productType.entities.ProductType;
 
@@ -23,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class Asset {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +34,6 @@ public class Product {
 
     @Column(nullable = false)
     private String image;
-
-    @Column(nullable = false)
-    private Integer qty;
 
     @ManyToOne
     @JoinColumn(name = "product_type", nullable = false)

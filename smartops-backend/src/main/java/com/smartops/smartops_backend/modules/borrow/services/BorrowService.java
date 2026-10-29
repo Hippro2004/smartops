@@ -8,14 +8,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.smartops.smartops_backend.modules.assets.entities.Asset;
+import com.smartops.smartops_backend.modules.assets.services.AssetService;
 import com.smartops.smartops_backend.modules.borrow.dtos.RequestBorrow;
 import com.smartops.smartops_backend.modules.borrow.entities.BorrowRecord;
 import com.smartops.smartops_backend.modules.borrow.entities.BorrowStatus;
 import com.smartops.smartops_backend.modules.borrow.repositories.BorrowRepo;
 import com.smartops.smartops_backend.common.exceptions.BusinessException;
 import com.smartops.smartops_backend.common.exceptions.ErrorCode;
-import com.smartops.smartops_backend.modules.product.entities.Product;
-import com.smartops.smartops_backend.modules.product.services.ProductService;
 import com.smartops.smartops_backend.modules.user.entities.User;
 import com.smartops.smartops_backend.modules.user.services.UserService;
 
@@ -28,14 +28,14 @@ public class BorrowService {
 
     private final BorrowRepo borrowRepo;
     private final UserService userService;
-    private final ProductService productService;
+    private final AssetService productService;
 
     private static final List<BorrowStatus> ACTIVE_STATUSES = List.of(BorrowStatus.BORROWED, BorrowStatus.PENDING);
 
     @Transactional
     public BorrowRecord save(RequestBorrow request) {
         User user = userService.getById(request.getUserId());
-        Product product = productService.getById(request.getProductId());
+        Asset product = productService.getById(request.getProductId());
 
         // BorrowRecord borrowRecord = getBorrowByUserIdAndProductId(user.getId(),
         // product.getId());

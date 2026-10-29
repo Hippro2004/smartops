@@ -1,4 +1,4 @@
-package com.smartops.smartops_backend.modules.product.dtos;
+package com.smartops.smartops_backend.modules.assets.dtos;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestProduct {
+public class RequestAsset {
 
     @NotBlank
     private String name;

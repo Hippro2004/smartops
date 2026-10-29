@@ -1,4 +1,4 @@
-package com.smartops.smartops_backend.modules.product.dtos;
+package com.smartops.smartops_backend.modules.assets.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponse {
+public class AssetResponse {
 
     private String name;
     private String image;
