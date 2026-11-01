@@ -7,4 +7,6 @@ import com.smartops.smartops_backend.modules.asset.entities.Asset;
 public interface AssetRepo extends JpaRepository<Asset, Long> {
     boolean existsByName(String name);
 
+    boolean existsBySerialNumber(String serialNumber);
+
 }

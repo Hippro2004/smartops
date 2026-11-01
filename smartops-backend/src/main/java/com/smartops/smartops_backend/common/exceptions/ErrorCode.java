@@ -13,8 +13,13 @@ public enum ErrorCode {
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong"),
 
     // --- Aseet ---
-    ASSET_TAKEN(HttpStatus.CONFLICT, "Asset already exists"),
+    ASSET_NAME_TAKEN(HttpStatus.CONFLICT, "Asset Name already exists"),
     ASSET_NOT_FOUND(HttpStatus.NOT_FOUND, "Asset not found"),
+    ASSET_SERIAL_TAKEN(HttpStatus.CONFLICT, "Asset serial already exists"),
+
+    // --- Category ---
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "Category not found"),
+    CATEGORY_NAME_TAKEN(HttpStatus.CONFLICT, "Category name already exists"),
 
     // --- Borrowed Record ---
     BORROW_NOT_FOUND(HttpStatus.NOT_FOUND, "Borrow not found")

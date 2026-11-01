@@ -1,11 +1,8 @@
 package com.smartops.smartops_backend.modules.asset.entities;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.smartops.smartops_backend.modules.category.entities.Category;
 
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -14,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,22 +35,16 @@ public class Asset {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String serialNumber;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "asset_cagetories", joinColumns = @JoinColumn(name = "asset_id"))
-    @Column(name = "cagetory")
-    @Builder.Default
-    private Set<AssetCagetory> cagetorise = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "asset.status", joinColumns = @JoinColumn(name = "asset_id"))
     @Column(nullable = false)
-    @Builder.Default
-    private Set<AssetStatus> status = new HashSet<>();
+    private AssetStatus status;
 
     private String description;
 }
