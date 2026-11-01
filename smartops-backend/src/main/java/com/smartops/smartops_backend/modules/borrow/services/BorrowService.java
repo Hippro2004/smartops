@@ -8,8 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.smartops.smartops_backend.modules.assets.entities.Asset;
-import com.smartops.smartops_backend.modules.assets.services.AssetService;
 import com.smartops.smartops_backend.modules.borrow.dtos.RequestBorrow;
 import com.smartops.smartops_backend.modules.borrow.entities.BorrowRecord;
 import com.smartops.smartops_backend.modules.borrow.entities.BorrowStatus;
@@ -28,7 +26,6 @@ public class BorrowService {
 
     private final BorrowRepo borrowRepo;
     private final UserService userService;
-    private final AssetService productService;
 
     private static final List<BorrowStatus> ACTIVE_STATUSES = List.of(BorrowStatus.BORROWED, BorrowStatus.PENDING);
 

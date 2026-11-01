@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
 
-    // --- USER ---
+    // --- User ---
     USERNAME_TAKEN(HttpStatus.CONFLICT, "Username already exists"),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "User not found"),
     EMAIL_TAKEN(HttpStatus.CONFLICT, "Email already exists"),
@@ -12,17 +12,11 @@ public enum ErrorCode {
     VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "Validation failed"),
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong"),
 
-    // --- PRODUCT ---
-    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "Product not found"),
-    PRODUCT_NAME_TAKEN(HttpStatus.CONFLICT, "My Name Product already exists"),
+    // --- Aseet ---
+    ASSET_TAKEN(HttpStatus.CONFLICT, "Asset already exists"),
+    ASSET_NOT_FOUND(HttpStatus.NOT_FOUND, "Asset not found"),
 
-    // --- PRODUCT TYPE ---
-    PRODUCT_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "Product type not found"),
-    PRODUCT_TYPE_TAKEN(HttpStatus.NOT_FOUND, "My Name Product already exists"),
-
-    PRODUCT_ALREADY_BORROWED(HttpStatus.CONFLICT, "Product is already borrowed"),
-
-    // --- BORROWRECORD ---
+    // --- Borrowed Record ---
     BORROW_NOT_FOUND(HttpStatus.NOT_FOUND, "Borrow not found")
 
     ;
