@@ -1,7 +1,7 @@
 package com.smartops.smartops_backend.modules.asset.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.smartops.smartops_backend.modules.asset.dtos.UpdateAsset;
+import org.springframework.web.bind.annotation.*;
 
 import com.smartops.smartops_backend.common.dto.PageResponse;
 import com.smartops.smartops_backend.modules.asset.dtos.AssetResponse;
@@ -17,11 +17,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/assets")
@@ -48,6 +43,12 @@ public class AssetController {
     public ResponseEntity<Void> deleteAsset(@PathVariable Long id) {
         assetService.deleteAssetById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/updateAsset")
+    public ResponseEntity<AssetResponse> updateAsset(@RequestParam Long id, UpdateAsset updateAsset) {
+
+        return
     }
 
     private AssetResponse toResponse(Asset a) {
