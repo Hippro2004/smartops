@@ -30,12 +30,13 @@ public class BorrowController {
     private final BorrowService borrowService;
 
     @PostMapping("/save")
-    public ResponseEntity<BorrowResponse> saveBorrow(@RequestBody @Validated RequestBorrow request) {
-        BorrowRecord created = borrowService.save(request);
-        return ResponseEntity.ok(new BorrowResponse(
-                created.getProduct().getName(),
-                created.getBorrowedAt().toString(),
-                created.getStatus().toString()));
+    public ResponseEntity<BorrowResponse> createBorrow(@RequestBody @Validated RequestBorrow request) {
+        BorrowRecord borrow = borrowService.createBorrow(request);
+        return ResponseEntity.ok(BorrowResponse.builder()
+                .assetName(borrow.getAsset().getName())
+                .borrowedAt(borrow.getBorrowedAt())
+                .status(borrow.getStatus().name())
+                .build());
     }
 
     @GetMapping("/user/{username}")
@@ -44,8 +45,8 @@ public class BorrowController {
             @PageableDefault(sort = "borrowedAt", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<BorrowResponse> page = borrowService.getListBorrowByUserId(userId, pageable)
                 .map(b -> BorrowResponse.builder()
-                        .productName(b.getProduct().getName())
-                        .borrowedAt(b.getBorrowedAt().toString())
+                        .assetName(b.getAsset().getName())
+                        .borrowedAt(b.getBorrowedAt())
                         .status(b.getStatus().toString())
                         .build());
         return PageResponse.from(page);

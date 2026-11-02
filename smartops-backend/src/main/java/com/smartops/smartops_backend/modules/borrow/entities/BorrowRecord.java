@@ -2,7 +2,7 @@ package com.smartops.smartops_backend.modules.borrow.entities;
 
 import java.time.Instant;
 
-import com.smartops.smartops_backend.modules.assets.entities.Asset;
+import com.smartops.smartops_backend.modules.asset.entities.Asset;
 import com.smartops.smartops_backend.modules.user.entities.User;
 
 import jakarta.persistence.Column;
@@ -42,7 +42,7 @@ public class BorrowRecord {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id")
-    private Asset product;
+    private Asset asset;
 
     @Column(nullable = false)
     private Instant borrowedAt;

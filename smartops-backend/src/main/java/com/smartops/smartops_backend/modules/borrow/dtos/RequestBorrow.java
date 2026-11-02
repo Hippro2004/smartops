@@ -19,7 +19,7 @@ public class RequestBorrow {
     private Long userId;
 
     @NotNull
-    private Long productId;
+    private Long assetId;
 
     @NotNull
     @Future

@@ -13,7 +13,7 @@ import com.smartops.smartops_backend.modules.borrow.entities.BorrowStatus;
 public interface BorrowRepo extends JpaRepository<BorrowRecord, Long> {
     Page<BorrowRecord> findAllByUserIdOrderByBorrowedAtDesc(Long userId, Pageable pageable);
 
-    Optional<BorrowRecord> findByUserIdAndProductId(Long userId, Long productId);
+    Optional<BorrowRecord> findByUserIdAndAssetId(Long userId, Long assetId);
 
-    boolean existsByProductIdAndStatusIn(Long productId, Collection<BorrowStatus> status);
+    boolean existsByAssetIdAndStatusIn(Long assetId, Collection<BorrowStatus> status);
 }

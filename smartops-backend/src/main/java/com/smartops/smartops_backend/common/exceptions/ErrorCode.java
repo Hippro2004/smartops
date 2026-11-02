@@ -17,12 +17,16 @@ public enum ErrorCode {
     ASSET_NOT_FOUND(HttpStatus.NOT_FOUND, "Asset not found"),
     ASSET_SERIAL_TAKEN(HttpStatus.CONFLICT, "Asset serial already exists"),
 
+    ASSET_ALREADY_BORROWED(HttpStatus.CONFLICT, "Asset "),
+
     // --- Category ---
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "Category not found"),
     CATEGORY_NAME_TAKEN(HttpStatus.CONFLICT, "Category name already exists"),
 
     // --- Borrowed Record ---
-    BORROW_NOT_FOUND(HttpStatus.NOT_FOUND, "Borrow not found")
+    BORROW_NOT_FOUND(HttpStatus.NOT_FOUND, "Borrow not found"),
+
+    INVALID_STATUS_TRANSITION(HttpStatus.CONFLICT, "Cannot change asset to this status"),
 
     ;
 
