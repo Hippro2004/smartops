@@ -1,6 +1,8 @@
 package com.smartops.smartops_backend.modules.asset.controllers;
 
 import com.smartops.smartops_backend.modules.asset.dtos.UpdateAsset;
+import com.smartops.smartops_backend.modules.asset.dtos.UpdateStatus;
+
 import org.springframework.web.bind.annotation.*;
 
 import com.smartops.smartops_backend.common.dto.PageResponse;
@@ -27,9 +29,9 @@ public class AssetController {
 
     @PostMapping("/create-asset")
     public ResponseEntity<AssetResponse> createAsset(@RequestBody @Validated RequestAsset request) {
-        Asset asset = assetService.createAsset(request);
-
-        return ResponseEntity.ok(toResponse(asset));
+        // Asset asset = assetService.createAsset(request);
+        // return ResponseEntity.ok(toResponse(asset));
+        return ResponseEntity.ok(toResponse(assetService.createAsset(request)));
     }
 
     @GetMapping("/all-assets")
@@ -45,10 +47,20 @@ public class AssetController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/updateAsset")
-    public ResponseEntity<AssetResponse> updateAsset(@RequestParam Long id, UpdateAsset updateAsset) {
+    @PutMapping("/{id}")
+    public ResponseEntity<AssetResponse> updateAsset(@PathVariable Long id,
+            @RequestBody @Validated UpdateAsset updateAsset) {
+        // Asset updated = assetService.updateAsset(id, updateAsset);
+        // return ResponseEntity.ok(toResponse(updated));
+        return ResponseEntity.ok(toResponse(assetService.updateAsset(id, updateAsset)));
+    }
 
-        return
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<AssetResponse> changeStatus(@PathVariable Long id,
+            @RequestBody @Validated UpdateStatus request) {
+        // Asset response = assetService.changeStatus(id, request);
+        // return ResponseEntity.ok(toResponse(response));
+        return ResponseEntity.ok(toResponse(assetService.changeStatus(id, request)));
     }
 
     private AssetResponse toResponse(Asset a) {

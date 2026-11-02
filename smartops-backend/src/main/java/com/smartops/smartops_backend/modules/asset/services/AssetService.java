@@ -1,6 +1,5 @@
 package com.smartops.smartops_backend.modules.asset.services;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -70,19 +69,32 @@ public class AssetService {
     }
 
     @Transactional
-    public Asset updateAsset(Long id, UpdateAsset updateAsset) {
-        return assetRepo.findById(id).map(asset -> {
-            asset.setName(updateAsset.getName());
-            asset.setSerialNumber(updateAsset.getSerialNumber());
-            asset.setDescription(updateAsset.getDescription());
+    public Asset updateAsset(Long id, UpdateAsset request) {
+        Asset asset = assetRepo.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.ASSET_NOT_FOUND));
 
-            return assetRepo.save(asset);
-        }).orElseThrow(() -> new BusinessException(ErrorCode.ASSET_NOT_FOUND));
+        if (assetRepo.existsByNameAndIdNot(request.getName(), id)) {
+            throw new BusinessException(ErrorCode.ASSET_NAME_TAKEN);
+        }
+
+        if (assetRepo.existsBySerialNumberAndIdNot(request.getSerialNumber(), id)) {
+            throw new BusinessException(ErrorCode.ASSET_SERIAL_TAKEN);
+        }
+
+        Category category = categoryService.getById(request.getCategoryId());
+
+        asset.setName(request.getName());
+        asset.setSerialNumber(request.getSerialNumber());
+        asset.setCategory(category);
+        asset.setDescription(request.getDescription());
+
+        return asset;
     }
 
     @Transactional
     public Asset changeStatus(Long id, UpdateStatus updateStatus) {
-        Asset asset = assetRepo.findById(id).orElseThrow(() -> new BusinessException(ErrorCode.ASSET_NOT_FOUND));
+        Asset asset = assetRepo.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.ASSET_NOT_FOUND));
 
         if (!ASSET_STATUS.get(asset.getStatus()).contains(updateStatus.getStatus())) {
             throw new BusinessException(ErrorCode.INVALID_STATUS_TRANSITION);

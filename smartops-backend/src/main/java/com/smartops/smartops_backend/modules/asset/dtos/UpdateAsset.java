@@ -15,17 +15,14 @@ import lombok.Setter;
 @Builder
 public class UpdateAsset {
 
-    @NotNull
-    private Long assetId;
-
     @NotBlank
     private String name;
 
     @NotBlank
     private String serialNumber;
 
-    @NotBlank
-    private String status;
+    @NotNull
+    private Long categoryId;
 
     private String description;
 
