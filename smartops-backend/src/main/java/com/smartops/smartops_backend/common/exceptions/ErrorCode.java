@@ -8,8 +8,10 @@ public enum ErrorCode {
     USERNAME_TAKEN(HttpStatus.CONFLICT, "Username already exists"),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "User not found"),
     EMAIL_TAKEN(HttpStatus.CONFLICT, "Email already exists"),
+    CONTACT_TAKEN(HttpStatus.CONFLICT, "Contact already exists"),
     INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Invalid username or password"),
     VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "Validation failed"),
+
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong"),
 
     // --- Aseet ---

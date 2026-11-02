@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.smartops.smartops_backend.modules.user.dtos.ProfileResponse;
 import com.smartops.smartops_backend.modules.user.dtos.RequestLogin;
 import com.smartops.smartops_backend.modules.user.dtos.RequestRegister;
+import com.smartops.smartops_backend.modules.user.dtos.UpdateUser;
 import com.smartops.smartops_backend.modules.user.dtos.UserResponse;
 import com.smartops.smartops_backend.modules.user.entities.User;
 import com.smartops.smartops_backend.modules.user.services.UserService;
@@ -18,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -76,16 +78,34 @@ public class UserController {
         // }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProfileResponse> getProfileUser(@PathVariable Long id, Authentication auth) {
-        User user = userService.getById(id);
-        return ResponseEntity.ok(new ProfileResponse(
-                user.getUsername(),
-                user.getEmail(),
-                user.getGender(),
-                user.getFirstname(),
-                user.getSurname(),
-                user.getContact()));
+    private ProfileResponse toProfileResponse(User u) {
+        return ProfileResponse.builder()
+                .username(u.getUsername())
+                .email(u.getEmail())
+                .gender(u.getGender())
+                .firstname(u.getFirstname())
+                .surname(u.getSurname())
+                .contact(u.getContact())
+                .build();
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileResponse> getProfileUser(@RequestHeader String username, Authentication auth) {
+        // User user = userService.getByUsername(username);
+        // return ResponseEntity.ok(new ProfileResponse(
+        // user.getUsername(),
+        // user.getEmail(),
+        // user.getGender(),
+        // user.getFirstname(),
+        // user.getSurname(),
+        // user.getContact()));
+        return ResponseEntity.ok(toProfileResponse(userService.getByUsername(username)));
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<ProfileResponse> updateProfileUser(@RequestHeader String name,
+            @RequestBody @Validated UpdateUser request) {
+        return ResponseEntity.ok(toProfileResponse(userService.updateProfile(name, request)));
     }
 
 }

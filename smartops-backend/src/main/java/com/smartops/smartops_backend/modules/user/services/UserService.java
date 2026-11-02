@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.smartops.smartops_backend.common.exceptions.BusinessException;
 import com.smartops.smartops_backend.common.exceptions.ErrorCode;
 import com.smartops.smartops_backend.modules.user.dtos.RequestRegister;
+import com.smartops.smartops_backend.modules.user.dtos.UpdateUser;
 import com.smartops.smartops_backend.modules.user.entities.Role;
 import com.smartops.smartops_backend.modules.user.entities.User;
 import com.smartops.smartops_backend.modules.user.repositories.UserRepo;
@@ -67,6 +68,28 @@ public class UserService {
 
     public User getById(Long id) {
         return userRepo.findById(id).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    public User getByUsername(String name) {
+        return userRepo.findByUsername(name).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    public User updateProfile(String username, UpdateUser request) {
+        User user = userRepo.findByUsername(username)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        if (userRepo.existsByContactAndUsernameNot(request.getContact(), username)) {
+            throw new BusinessException(ErrorCode.CONTACT_TAKEN);
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFirstname(request.getFirstname());
+        user.setSurname(request.getSurname());
+        user.setGender(request.getGender());
+        user.setContact(request.getContact());
+
+        return user;
+
     }
 
     // public boolean authenticate(String username, String rawPassword) {
