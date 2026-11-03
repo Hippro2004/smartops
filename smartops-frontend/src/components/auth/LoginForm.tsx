@@ -18,8 +18,8 @@ export default function LoginForm() {
         setError(null);
 
         try {
-            const { username } = await authApi.login(form);
-            localStorage.setItem('username', username);
+            const res = await authApi.login(form);
+            localStorage.setItem('user', JSON.stringify(res));
             router.push('/assets');
 
 

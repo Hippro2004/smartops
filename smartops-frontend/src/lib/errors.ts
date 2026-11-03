@@ -2,8 +2,11 @@ import axios from "axios";
 import { ApiError } from "../types/error";
 
 const ERROR_MESSAGES: Record<string, string> = {
-  USERNAME_ALREADY_EXISTS: "ชื่อผู้ใช้นี้ถูกใช้แล้ว",
-  EMAIL_ALREADY_EXISTS: "อีเมลนี้ถูกใช้แล้ว",
+  // --- user ---
+  USERNAME_TAKEN: "ชื่อผู้ใช้นี้ถูกใช้แล้ว",
+  EMAIL_TAKEN: "อีเมลนี้ถูกใช้แล้ว",
+  CONTACT_TAKEN: "เบอร์โทรนี้ถูกใช้แล้ว",
+
   INVALID_CREDENTIALS: "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง",
 
   ASSET_NOT_FOUND: "ไม่พบอุปกรณ์นี้",

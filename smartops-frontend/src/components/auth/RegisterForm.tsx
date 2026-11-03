@@ -1,6 +1,7 @@
 'use client';
 
 import { authApi } from "@/src/lib/api";
+import { getErrorMessage } from "@/src/lib/errors";
 import { Gender, RegisterInput } from "@/src/types/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -19,22 +20,27 @@ export default function RegisterForm() {
     });
     const [confirm, setConfirm] = useState("");
     const [loading, setLoading] = useState<boolean>(false);
+
     const [error, setError] = useState<string | null>(null);
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);
         setError(null);
 
+        // 1. เช็ครหัสผ่านให้ตรงกันก่อน (และต้องมี return เพื่อหยุดการทำงาน)
         if (form.password !== confirm) {
-            setError('รหัสไม่ตรงกัน โปรดลองใหม่อีกครั้ง')
+            setError('รหัสผ่านไม่ตรงกัน โปรดลองใหม่อีกครั้ง');
+            return;
         }
+
+        setLoading(true);
 
         try {
             await authApi.register(form);
-            router.push("/");
+            router.push("/"); // สมัครเสร็จพาไปหน้า Login
         } catch (err) {
-            setError("เกิดข้อผิดพลาดในการสมัครสมาชิก กรุณาลองใหม่อีกครั้ง");
+            setError(getErrorMessage(err));
+
         } finally {
             setLoading(false);
         }
@@ -59,26 +65,27 @@ export default function RegisterForm() {
                 />
             </div>
 
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input
-                    type="password"
-                    value={form.password}
-                    onChange={(e) => setForm({ ...form, password: e.target.value })}
-                    className="w-full border border-gray-300 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                />
-            </div>
-
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Confirm password</label>
-                <input
-                    type="password"
-                    value={confirm}
-                    onChange={(e) => setConfirm(e.target.value)}
-                    className="w-full border border-gray-300 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                />
+            <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input
+                        type="password"
+                        value={form.password}
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                        className="w-full border border-gray-300 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                    />
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                    <input
+                        type="password"
+                        value={confirm}
+                        onChange={(e) => setConfirm(e.target.value)}
+                        className="w-full border border-gray-300 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                    />
+                </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">

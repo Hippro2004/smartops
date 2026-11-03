@@ -5,6 +5,7 @@ export interface LoginInput {
 
 export interface LoginResponse {
   username: string;
+  role: string;
 }
 export type Gender = "MALE" | "FEMALE";
 
