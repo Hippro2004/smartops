@@ -18,7 +18,7 @@ import lombok.Setter;
 public class RequestRegister {
 
     @NotBlank
-    @Size(min = 8, max = 50)
+    @Size(min = 4, max = 50)
     private String username;
 
     @NotBlank

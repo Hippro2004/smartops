@@ -60,7 +60,7 @@ public class User {
     @Column(nullable = false, length = 100)
     private String surname;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 10)
     private String contact;
 
 }
