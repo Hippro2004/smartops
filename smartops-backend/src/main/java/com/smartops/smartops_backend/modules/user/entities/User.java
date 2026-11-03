@@ -50,8 +50,9 @@ public class User {
     @Column(nullable = false, unique = true, length = 50)
     private String email;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Integer gender;
+    private Gender gender;
 
     @Column(nullable = false)
     private String firstname;

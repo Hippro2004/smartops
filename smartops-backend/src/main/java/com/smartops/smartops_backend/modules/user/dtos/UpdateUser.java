@@ -1,5 +1,7 @@
 package com.smartops.smartops_backend.modules.user.dtos;
 
+import com.smartops.smartops_backend.modules.user.entities.Gender;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -19,7 +21,7 @@ public class UpdateUser {
     private String surname;
 
     @NotNull
-    private Integer gender;
+    private Gender gender;
 
     @NotBlank
     private String contact;

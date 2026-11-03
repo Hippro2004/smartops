@@ -1,5 +1,7 @@
 package com.smartops.smartops_backend.modules.user.dtos;
 
+import com.smartops.smartops_backend.modules.user.entities.Gender;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +19,7 @@ public class ProfileResponse {
 
     private String email;
 
-    private Integer gender;
+    private Gender gender;
 
     private String firstname;
 

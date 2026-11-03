@@ -24,18 +24,6 @@ public class UserService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
 
-    // public User getUserByUsername(String name) {
-    // return userRepo.findByUsername(name).orElse(null);
-    // }
-
-    // public boolean existsByUsername(String name) {
-    // return userRepo.existsByUsername(name);
-    // }
-
-    // public boolean existsByEmail(String email) {
-    // return userRepo.existsByEmail(email);
-    // }
-
     @Transactional
     public User save(RequestRegister request) {
         if (userRepo.existsByUsername(request.getUsername())) {
