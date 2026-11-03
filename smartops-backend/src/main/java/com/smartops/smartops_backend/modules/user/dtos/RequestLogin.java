@@ -10,7 +10,7 @@ import lombok.Setter;
 public class RequestLogin {
 
     @NotBlank
-    @Size(min = 4, max = 50)
+    @Size(min = 8, max = 50)
     private String username;
 
     @NotBlank

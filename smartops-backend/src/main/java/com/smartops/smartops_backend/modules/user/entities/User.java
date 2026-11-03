@@ -37,7 +37,7 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role")
+    @Column(name = "role", nullable = false, length = 10)
     @Builder.Default
     private Set<Role> roles = new HashSet<>();
 
@@ -47,17 +47,17 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "gender", nullable = false, length = 10)
     private Gender gender;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String firstname;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String surname;
 
     @Column(nullable = false, unique = true)

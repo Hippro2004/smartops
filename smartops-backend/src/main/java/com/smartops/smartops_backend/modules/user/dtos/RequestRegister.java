@@ -18,13 +18,15 @@ import lombok.Setter;
 public class RequestRegister {
 
     @NotBlank
+    @Size(min = 8, max = 50)
     private String username;
 
     @NotBlank
-    @Size(min = 4, max = 32)
+    @Size(min = 8, max = 32)
     private String password;
 
     @NotBlank
+    @Size(max = 254)
     @Email
     private String email;
 
@@ -32,12 +34,15 @@ public class RequestRegister {
     private Gender gender;
 
     @NotBlank
+    @Size(max = 50)
     private String firstname;
 
     @NotBlank
+    @Size(max = 50)
     private String surname;
 
     @NotBlank
+    @Size(max = 10)
     private String contact;
 
 }
