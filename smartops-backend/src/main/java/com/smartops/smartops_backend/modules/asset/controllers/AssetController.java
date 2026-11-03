@@ -22,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 
 @RestController
 @RequestMapping("/assets")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class AssetController {
 
