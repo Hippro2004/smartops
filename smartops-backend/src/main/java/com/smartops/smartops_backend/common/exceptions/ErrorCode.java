@@ -28,6 +28,9 @@ public enum ErrorCode {
     // --- Borrowed Record ---
     BORROW_NOT_FOUND(HttpStatus.NOT_FOUND, "Borrow not found"),
 
+    // --- Token ---
+    INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "Invalid or expired refresh token"),
+
     INVALID_STATUS_TRANSITION(HttpStatus.CONFLICT, "Cannot change asset to this status"),
 
     ;

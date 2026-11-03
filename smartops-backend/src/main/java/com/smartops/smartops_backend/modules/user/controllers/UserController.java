@@ -4,10 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.smartops.smartops_backend.modules.user.dtos.ProfileResponse;
-import com.smartops.smartops_backend.modules.user.dtos.RequestLogin;
 import com.smartops.smartops_backend.modules.user.dtos.RequestRegister;
 import com.smartops.smartops_backend.modules.user.dtos.UpdateUser;
-import com.smartops.smartops_backend.modules.user.dtos.UserResponse;
 import com.smartops.smartops_backend.modules.user.entities.User;
 import com.smartops.smartops_backend.modules.user.services.UserService;
 
@@ -16,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,11 +35,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<UserResponse> loginUser(@RequestBody @Validated RequestLogin request) {
-        User user = userService.login(request.getUsername(), request.getPassword());
-        return ResponseEntity.ok(new UserResponse(user.getUsername(), user.getRoles().toString()));
-    }
+    // @PostMapping("/login")
+    // public ResponseEntity<UserResponse> loginUser(@RequestBody @Validated
+    // RequestLogin request) {
+    // User user = userService.login(request.getUsername(), request.getPassword());
+    // return ResponseEntity.ok(new UserResponse(user.getUsername(),
+    // user.getRoles().toString()));
+    // }
 
     private ProfileResponse toProfileResponse(User u) {
         return ProfileResponse.builder()
@@ -52,9 +54,18 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping("/profile")
-    public ResponseEntity<ProfileResponse> getProfileUser(@RequestHeader String username, Authentication auth) {
-        return ResponseEntity.ok(toProfileResponse(userService.getByUsername(username)));
+    // @GetMapping("/profile")
+    // public ResponseEntity<ProfileResponse> getProfileUser(@RequestHeader String
+    // username, Authentication auth) {
+    // return
+    // ResponseEntity.ok(toProfileResponse(userService.getByUsername(username)));
+    // }
+
+    @GetMapping("/me")
+    public ProfileResponse me(@AuthenticationPrincipal Jwt jwt) {
+        Long userId = Long.valueOf(jwt.getSubject());
+        User user = userService.getById(userId);
+        return toProfileResponse(user);
     }
 
     @PostMapping("/{id}")

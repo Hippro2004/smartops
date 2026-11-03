@@ -16,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,9 +31,21 @@ public class BorrowController {
 
     private final BorrowService borrowService;
 
-    @PostMapping("/save")
-    public ResponseEntity<BorrowResponse> createBorrow(@RequestBody @Validated RequestBorrow request) {
-        BorrowRecord borrow = borrowService.createBorrow(request);
+    // @PostMapping("/create")
+    // public ResponseEntity<BorrowResponse> createBorrow(@RequestBody @Validated
+    // RequestBorrow request) {
+    // BorrowRecord borrow = borrowService.createBorrow(request);
+    // return ResponseEntity.ok(BorrowResponse.builder()
+    // .assetName(borrow.getAsset().getName())
+    // .borrowedAt(borrow.getBorrowedAt())
+    // .status(borrow.getStatus().name())
+    // .build());
+
+    @PostMapping("/create")
+    public ResponseEntity<BorrowResponse> createBorrow(@AuthenticationPrincipal Jwt jwt,
+            @RequestBody @Validated RequestBorrow request) {
+        Long userId = Long.valueOf(jwt.getSubject());
+        BorrowRecord borrow = borrowService.createBorrow(request, userId);
         return ResponseEntity.ok(BorrowResponse.builder()
                 .assetName(borrow.getAsset().getName())
                 .borrowedAt(borrow.getBorrowedAt())
@@ -39,7 +53,7 @@ public class BorrowController {
                 .build());
     }
 
-    @GetMapping("/user/{username}")
+    @GetMapping("/{username}")
     public PageResponse<BorrowResponse> getMyBorrowed(
             @PathVariable Long userId,
             @PageableDefault(sort = "borrowedAt", direction = Sort.Direction.DESC) Pageable pageable) {

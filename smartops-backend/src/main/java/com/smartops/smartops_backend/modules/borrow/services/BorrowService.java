@@ -32,9 +32,30 @@ public class BorrowService {
 
     private static final List<BorrowStatus> ACTIVE_STATUSES = List.of(BorrowStatus.BORROWED, BorrowStatus.PENDING);
 
+    // @Transactional
+    // public BorrowRecord createBorrow(RequestBorrow request) {
+    // User user = userService.getById(request.getUserId());
+    // Asset asset = assetService.getById(request.getAssetId());
+
+    // // BorrowRecord borrowRecord = getBorrowByUserIdAndProductId(user.getId(),
+    // // product.getId());
+
+    // if (borrowRepo.existsByAssetIdAndStatusIn(asset.getId(), ACTIVE_STATUSES)) {
+    // throw new BusinessException(ErrorCode.ASSET_ALREADY_BORROWED);
+    // }
+
+    // return borrowRepo.save(BorrowRecord.builder()
+    // .user(user)
+    // .asset(asset)
+    // .borrowedAt(Instant.now())
+    // .dueAt(request.getDueAt())
+    // .status(BorrowStatus.PENDING)
+    // .build());
+
+    // }
     @Transactional
-    public BorrowRecord createBorrow(RequestBorrow request) {
-        User user = userService.getById(request.getUserId());
+    public BorrowRecord createBorrow(RequestBorrow request, Long userId) {
+        User user = userService.getById(userId);
         Asset asset = assetService.getById(request.getAssetId());
 
         // BorrowRecord borrowRecord = getBorrowByUserIdAndProductId(user.getId(),

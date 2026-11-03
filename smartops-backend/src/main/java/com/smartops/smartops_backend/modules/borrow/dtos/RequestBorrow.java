@@ -15,8 +15,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RequestBorrow {
 
-    @NotNull
-    private Long userId;
+    // @NotNull
+    // private Long userId;
 
     @NotNull
     private Long assetId;
