@@ -5,7 +5,7 @@ import com.smartops.smartops_backend.modules.asset.dtos.UpdateStatus;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.smartops.smartops_backend.common.dto.PageResponse;
+import com.smartops.smartops_backend.common.dtos.PageResponse;
 import com.smartops.smartops_backend.modules.asset.dtos.AssetResponse;
 import com.smartops.smartops_backend.modules.asset.dtos.RequestAsset;
 import com.smartops.smartops_backend.modules.asset.entities.Asset;

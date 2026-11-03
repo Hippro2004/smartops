@@ -3,11 +3,11 @@ package com.smartops.smartops_backend.modules.borrow.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.smartops.smartops_backend.common.dtos.PageResponse;
 import com.smartops.smartops_backend.modules.borrow.dtos.BorrowResponse;
 import com.smartops.smartops_backend.modules.borrow.dtos.RequestBorrow;
 import com.smartops.smartops_backend.modules.borrow.entities.BorrowRecord;
 import com.smartops.smartops_backend.modules.borrow.services.BorrowService;
-import com.smartops.smartops_backend.common.dto.PageResponse;
 
 import lombok.RequiredArgsConstructor;
 
