@@ -1,4 +1,4 @@
-package com.smartops.smartops_backend.common.dto;
+package com.smartops.smartops_backend.common.dtos;
 
 import java.time.Instant;
 import java.util.Map;
