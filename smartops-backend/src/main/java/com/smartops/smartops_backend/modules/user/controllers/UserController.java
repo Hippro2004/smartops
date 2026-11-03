@@ -30,51 +30,15 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> registerUser(@RequestBody @Validated RequestRegister request) {
-        User created = userService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(UserResponse.builder().username(created.getUsername()).build());
-
-        // try {
-
-        // if (userService.existsByUsername(request.getUsername())) {
-        // return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        // }
-
-        // if (userService.existsByEmail(request.getEmail())) {
-        // return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        // }
-
-        // User create = userService.save(request);
-
-        // UserResponse body = new UserResponse(create.getUsername());
-        // return ResponseEntity.status(HttpStatus.CREATED).body(body);
-        // } catch (Exception e) {
-        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        // }
+    public ResponseEntity<Void> registerUser(@RequestBody @Validated RequestRegister request) {
+        userService.save(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserResponse> loginUser(@RequestBody @Validated RequestLogin request) {
         User user = userService.login(request.getUsername(), request.getPassword());
         return ResponseEntity.ok(new UserResponse(user.getUsername(), user.getRoles().toString()));
-
-        // try {
-        // // User user = userService.getUserByUsername(request.getUsername());
-
-        // // if (user == null) {
-        // // return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        // // }
-
-        // if (!userService.authenticate(request.getUsername(), request.getPassword()))
-        // {
-        // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        // }
-        // return ResponseEntity.ok(new UserResponse(request.getUsername()));
-
-        // } catch (Exception e) {
-        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        // }
     }
 
     private ProfileResponse toProfileResponse(User u) {
@@ -90,14 +54,6 @@ public class UserController {
 
     @GetMapping("/profile")
     public ResponseEntity<ProfileResponse> getProfileUser(@RequestHeader String username, Authentication auth) {
-        // User user = userService.getByUsername(username);
-        // return ResponseEntity.ok(new ProfileResponse(
-        // user.getUsername(),
-        // user.getEmail(),
-        // user.getGender(),
-        // user.getFirstname(),
-        // user.getSurname(),
-        // user.getContact()));
         return ResponseEntity.ok(toProfileResponse(userService.getByUsername(username)));
     }
 
