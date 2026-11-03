@@ -16,7 +16,7 @@ api.interceptors.request.use((config) => {
 
 export const authApi = {
   login: async (data: LoginInput) => {
-    const res = await api.post<LoginResponse>("/users/login", data);
+    const res = await api.post<LoginResponse>("/auth/login", data);
     return res.data;
   },
   register: async (data: RegisterInput) => {
