@@ -1,7 +1,8 @@
 import axios from "axios";
 import { LoginInput, LoginResponse, RegisterInput } from "../types/auth";
+import { ProfileResponse } from "../types/user";
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: { "Content-Type": "application/json" },
 });
@@ -21,5 +22,12 @@ export const authApi = {
   },
   register: async (data: RegisterInput) => {
     await api.post("/users/register", data);
+  },
+};
+
+export const userApi = {
+  me: async () => {
+    const res = await api.get<ProfileResponse>("/users/me");
+    return res.data;
   },
 };

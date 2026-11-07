@@ -1,9 +1,11 @@
 'use client';
 import { authApi } from '@/src/lib/api';
+import { getErrorMessage } from '@/src/lib/errors';
 import { LoginInput } from '@/src/types/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useAuth } from './AuthProvider';
 
 
 export default function LoginForm() {
@@ -11,6 +13,7 @@ export default function LoginForm() {
     const [form, setForm] = useState<LoginInput>({ username: '', password: '' });
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const { refreshMe } = useAuth();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,10 +23,17 @@ export default function LoginForm() {
         try {
             const res = await authApi.login(form);
             localStorage.setItem('user', JSON.stringify(res));
+
+            localStorage.setItem('access_token', res.accessToken);
+            localStorage.setItem('refresh_token', res.refreshToken)
+
+            await refreshMe();
+
             router.push('/assets');
 
 
         } catch (error) {
+            setError(getErrorMessage(error))
 
         } finally {
             setSubmitting(false)
@@ -33,6 +43,12 @@ export default function LoginForm() {
     return (
         <>
             <form onSubmit={handleLogin} className="space-y-4">
+
+                {error && (
+                    <div className="bg-red-100 text-red-700 p-3 rounded-lg text-sm">
+                        {error}
+                    </div>
+                )}
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                         Username

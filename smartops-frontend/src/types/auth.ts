@@ -6,6 +6,9 @@ export interface LoginInput {
 export interface LoginResponse {
   username: string;
   role: string;
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
 }
 export type Gender = "MALE" | "FEMALE";
 

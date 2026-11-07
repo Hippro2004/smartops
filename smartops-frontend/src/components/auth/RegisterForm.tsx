@@ -37,7 +37,9 @@ export default function RegisterForm() {
 
         try {
             await authApi.register(form);
-            router.push("/"); // สมัครเสร็จพาไปหน้า Login
+            router.push("/");
+
+
         } catch (err) {
             setError(getErrorMessage(err));
 
