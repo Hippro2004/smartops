@@ -2,7 +2,6 @@
 import { authApi } from '@/src/lib/api';
 import { getErrorMessage } from '@/src/lib/errors';
 import { LoginInput } from '@/src/types/auth';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useAuth } from './AuthProvider';
@@ -29,7 +28,7 @@ export default function LoginForm() {
 
             await refreshMe();
 
-            router.push('/assets');
+            router.push('/dashboard');
 
 
         } catch (error) {

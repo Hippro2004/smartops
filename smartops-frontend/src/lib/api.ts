@@ -23,6 +23,9 @@ export const authApi = {
   register: async (data: RegisterInput) => {
     await api.post("/users/register", data);
   },
+  logout: async (data: string) => {
+    await api.post("/auth/logout", { data }).catch(() => {});
+  },
 };
 
 export const userApi = {
