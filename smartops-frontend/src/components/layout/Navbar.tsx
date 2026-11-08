@@ -4,6 +4,7 @@ import { authApi } from "@/src/lib/api";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "../auth/AuthProvider";
+import { tokens } from "@/src/lib/auth";
 
 
 export default function Navbar() {
@@ -19,10 +20,11 @@ export default function Navbar() {
     ];
 
     const handleLogout = async () => {
-        const refreshToken = localStorage.getItem("refresh_token");
-        if (refreshToken) await authApi.logout(refreshToken);
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('refresh_token')
+        const refreshToken = tokens.refresh();
+        if (refreshToken) {
+            await authApi.logout(refreshToken).catch(() => { });
+        }
+        tokens.clear();
         clear();
 
         router.push("/login")

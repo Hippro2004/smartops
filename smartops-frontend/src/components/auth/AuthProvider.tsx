@@ -1,6 +1,7 @@
 'use client';
 
 import { api } from '@/src/lib/api';
+import { tokens } from '@/src/lib/auth';
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 export interface Me {
@@ -34,6 +35,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setLoading(false);
             return;
         }
+
+        if (!tokens.access()) {
+            setMe(null);
+            setLoading(false);
+            return;
+        }
+
         try {
             const { data } = await api.get<Me>('/users/me');
             setMe(data);

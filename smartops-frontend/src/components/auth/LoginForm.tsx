@@ -5,6 +5,7 @@ import { LoginInput } from '@/src/types/auth';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useAuth } from './AuthProvider';
+import { tokens } from '@/src/lib/auth';
 
 
 export default function LoginForm() {
@@ -21,15 +22,12 @@ export default function LoginForm() {
 
         try {
             const res = await authApi.login(form);
-            localStorage.setItem('user', JSON.stringify(res));
+            // localStorage.setItem('access_token', res.accessToken);
+            // localStorage.setItem('refresh_token', res.refreshToken)
 
-            localStorage.setItem('access_token', res.accessToken);
-            localStorage.setItem('refresh_token', res.refreshToken)
-
+            tokens.save(res);
             await refreshMe();
-
             router.push('/dashboard');
-
 
         } catch (error) {
             setError(getErrorMessage(error))
