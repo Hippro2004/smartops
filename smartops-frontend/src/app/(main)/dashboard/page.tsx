@@ -1,3 +1,4 @@
+import Navbar from '@/src/components/layout/Navbar';
 import Link from 'next/link';
 
 const CARDS = [

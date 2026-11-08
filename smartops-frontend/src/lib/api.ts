@@ -70,7 +70,7 @@ export const authApi = {
     await api.post("/users/register", data);
   },
   logout: async (refreshToken: string) => {
-    await api.post("/auth/logout", { refreshToken }).catch(() => {});
+    await api.post("/auth/logout", { refreshToken });
   },
 };
 
