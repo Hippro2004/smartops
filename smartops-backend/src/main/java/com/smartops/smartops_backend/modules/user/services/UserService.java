@@ -26,6 +26,7 @@ public class UserService {
 
     @Transactional
     public User save(RequestRegister request) {
+
         if (userRepo.existsByUsername(request.getUsername())) {
             throw new BusinessException(ErrorCode.USERNAME_TAKEN);
         }
