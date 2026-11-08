@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# ความลับ ห้าม commit
+.env
+.vscode/launch.json
+
 ### STS ###
 .apt_generated
 .classpath
