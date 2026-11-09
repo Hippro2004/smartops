@@ -48,7 +48,7 @@ public class SecurityConfig {
                                 "/users/register", "/auth/login", "/auth/refresh", "/auth/logout")
                         .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "assets/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/assets/**").authenticated()
                         .requestMatchers("/assets/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth -> oauth
