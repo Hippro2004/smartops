@@ -81,6 +81,10 @@ public class UserService {
 
     }
 
+    public long getUserCount() {
+        return userRepo.count();
+    }
+
     // public boolean authenticate(String username, String rawPassword) {
     // User user = getUserByUsername(username);
     // if (user == null) {

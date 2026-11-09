@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.smartops.smartops_backend.common.exceptions.BusinessException;
 import com.smartops.smartops_backend.common.exceptions.ErrorCode;
+import com.smartops.smartops_backend.modules.asset.dtos.DashboardStats;
 import com.smartops.smartops_backend.modules.asset.dtos.RequestAsset;
 import com.smartops.smartops_backend.modules.asset.dtos.UpdateAsset;
 import com.smartops.smartops_backend.modules.asset.dtos.UpdateStatus;
@@ -18,6 +19,7 @@ import com.smartops.smartops_backend.modules.asset.entities.AssetStatus;
 import com.smartops.smartops_backend.modules.asset.repositories.AssetRepo;
 import com.smartops.smartops_backend.modules.category.entities.Category;
 import com.smartops.smartops_backend.modules.category.services.CategoryService;
+import com.smartops.smartops_backend.modules.user.services.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +30,7 @@ public class AssetService {
 
     private final AssetRepo assetRepo;
     private final CategoryService categoryService;
+    private final UserService userService;
     private static final Map<AssetStatus, Set<AssetStatus>> ASSET_STATUS = Map.of(
             AssetStatus.AVAILABLE, Set.of(AssetStatus.IN_USE, AssetStatus.UNDER_MAINTENANCE, AssetStatus.RETIRED),
             AssetStatus.IN_USE, Set.of(AssetStatus.AVAILABLE, AssetStatus.UNDER_MAINTENANCE),
@@ -102,6 +105,18 @@ public class AssetService {
 
         asset.setStatus(updateStatus.getStatus());
         return asset;
+    }
+
+    public DashboardStats getStats() {
+        return new DashboardStats(
+                assetRepo.count(),
+                assetRepo.countByStatus(AssetStatus.AVAILABLE),
+                assetRepo.countByStatus(AssetStatus.IN_USE),
+                assetRepo.countByStatus(AssetStatus.RETIRED),
+                userService.getUserCount(),
+                assetRepo.countByCategory()
+
+        );
     }
 
 }
