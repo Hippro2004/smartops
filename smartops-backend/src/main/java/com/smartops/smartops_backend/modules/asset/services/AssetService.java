@@ -17,8 +17,6 @@ import com.smartops.smartops_backend.modules.asset.dtos.UpdateStatus;
 import com.smartops.smartops_backend.modules.asset.entities.Asset;
 import com.smartops.smartops_backend.modules.asset.entities.AssetStatus;
 import com.smartops.smartops_backend.modules.asset.repositories.AssetRepo;
-import com.smartops.smartops_backend.modules.category.entities.Category;
-import com.smartops.smartops_backend.modules.category.services.CategoryService;
 import com.smartops.smartops_backend.modules.user.services.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 public class AssetService {
 
     private final AssetRepo assetRepo;
-    private final CategoryService categoryService;
     private final UserService userService;
     private static final Map<AssetStatus, Set<AssetStatus>> ASSET_STATUS = Map.of(
             AssetStatus.AVAILABLE, Set.of(AssetStatus.IN_USE, AssetStatus.UNDER_MAINTENANCE, AssetStatus.RETIRED),
@@ -47,13 +44,11 @@ public class AssetService {
             throw new BusinessException(ErrorCode.ASSET_SERIAL_TAKEN);
         }
 
-        Category category = categoryService.getById(request.getCategoryId());
-
         return assetRepo.save(Asset.builder()
                 .name(request.getName())
                 .serialNumber(request.getSerialNumber())
                 .description(request.getDescription())
-                .category(category)
+                .category(request.getCatetory())
                 .status(AssetStatus.AVAILABLE)
                 .build());
     }
@@ -84,11 +79,9 @@ public class AssetService {
             throw new BusinessException(ErrorCode.ASSET_SERIAL_TAKEN);
         }
 
-        Category category = categoryService.getById(request.getCategoryId());
-
         asset.setName(request.getName());
         asset.setSerialNumber(request.getSerialNumber());
-        asset.setCategory(category);
+        asset.setCategory(request.getCategory());
         asset.setDescription(request.getDescription());
 
         return asset;

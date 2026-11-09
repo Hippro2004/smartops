@@ -5,6 +5,7 @@ import com.smartops.smartops_backend.modules.asset.dtos.UpdateStatus;
 
 import com.smartops.smartops_backend.common.dtos.PageResponse;
 import com.smartops.smartops_backend.modules.asset.dtos.AssetResponse;
+import com.smartops.smartops_backend.modules.asset.dtos.DashboardStats;
 import com.smartops.smartops_backend.modules.asset.dtos.RequestAsset;
 import com.smartops.smartops_backend.modules.asset.entities.Asset;
 import com.smartops.smartops_backend.modules.asset.services.AssetService;
@@ -70,11 +71,16 @@ public class AssetController {
         return ResponseEntity.ok(toResponse(assetService.changeStatus(id, request)));
     }
 
+    @GetMapping("/dashboard")
+    public ResponseEntity<DashboardStats> dashboard() {
+        return ResponseEntity.ok(assetService.getStats());
+    }
+
     private AssetResponse toResponse(Asset a) {
         return new AssetResponse(
                 a.getName(),
                 a.getSerialNumber(),
-                a.getCategory().getName(),
+                a.getCategory().name(),
                 a.getStatus().name(),
                 a.getDescription());
     }

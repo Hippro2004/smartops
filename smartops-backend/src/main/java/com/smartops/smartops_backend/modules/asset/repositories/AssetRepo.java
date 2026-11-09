@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.smartops.smartops_backend.modules.asset.dtos.CategoryCount;
 import com.smartops.smartops_backend.modules.asset.entities.Asset;
 import com.smartops.smartops_backend.modules.asset.entities.AssetStatus;
-import com.smartops.smartops_backend.modules.category.dtos.CategoryCount;
 
 public interface AssetRepo extends JpaRepository<Asset, Long> {
     boolean existsByName(String name);
@@ -27,6 +27,6 @@ public interface AssetRepo extends JpaRepository<Asset, Long> {
 
     long countByStatus(AssetStatus status);
 
-    @Query("select CategoryCount(a.category, count(a)) from Asset a group by a.category")
+    @Query("select a.category as category, count(a) as count from Asset a group by a.category")
     List<CategoryCount> countByCategory();
 }

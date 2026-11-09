@@ -1,15 +1,15 @@
 package com.smartops.smartops_backend.modules.asset.dtos;
 
+import com.smartops.smartops_backend.modules.asset.entities.AssetCatetory;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -22,7 +22,7 @@ public class UpdateAsset {
     private String serialNumber;
 
     @NotNull
-    private Long categoryId;
+    private AssetCatetory category;
 
     private String description;
 

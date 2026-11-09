@@ -2,6 +2,8 @@ package com.smartops.smartops_backend.modules.asset.dtos;
 
 import org.springframework.stereotype.Service;
 
+import com.smartops.smartops_backend.modules.asset.entities.AssetCatetory;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -26,6 +28,6 @@ public class RequestAsset {
     private String description;
 
     @NotNull
-    private Long categoryId;
+    private AssetCatetory catetory;
 
 }
