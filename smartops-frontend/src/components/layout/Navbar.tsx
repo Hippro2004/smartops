@@ -16,7 +16,7 @@ export default function Navbar() {
     const MENU_ITEMS = [
         { href: '/dashboard', label: 'Dashboard' },
         { href: '/assets', label: 'Assets' },
-        ...(isAdmin(me) ? [{ href: "/admin", label: "admin" }] : []),
+        ...(isAdmin(me) ? [{ href: "/admin/dashboard", label: "admin" }] : []),
     ];
 
     const handleLogout = async () => {

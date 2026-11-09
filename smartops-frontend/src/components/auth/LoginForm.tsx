@@ -27,7 +27,7 @@ export default function LoginForm() {
 
             tokens.save(res);
             const me = await refreshMe();
-            router.push(isAdmin(me) ? '/admin' : "/dashboard");
+            router.push(isAdmin(me) ? '/admin/dashboard' : "/dashboard");
 
         } catch (error) {
             setError(getErrorMessage(error))

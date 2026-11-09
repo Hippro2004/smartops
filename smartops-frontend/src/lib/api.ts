@@ -1,7 +1,8 @@
 import axios from "axios";
 import { LoginInput, LoginResponse, RegisterInput } from "../types/auth";
-import { ProfileResponse } from "../types/user";
 import { tokens } from "./auth";
+import { DashboardStats } from "../types/assets/dashboard";
+import { ProfileResponse } from "../types/users/user";
 
 let refreshing: Promise<string | null> | null = null;
 
@@ -78,5 +79,11 @@ export const userApi = {
   me: async () => {
     const res = await api.get<ProfileResponse>("/users/me");
     return res.data;
+  },
+};
+
+export const dashboardApi = {
+  getStats: async () => {
+    const res = await api.get<DashboardStats>("/assets/dashboard");
   },
 };
