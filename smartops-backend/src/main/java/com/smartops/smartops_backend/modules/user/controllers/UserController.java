@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.smartops.smartops_backend.modules.user.dtos.ProfileResponse;
 import com.smartops.smartops_backend.modules.user.dtos.RequestRegister;
 import com.smartops.smartops_backend.modules.user.dtos.UpdateUser;
+import com.smartops.smartops_backend.modules.user.entities.Role;
 import com.smartops.smartops_backend.modules.user.entities.User;
 import com.smartops.smartops_backend.modules.user.services.UserService;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,14 +46,15 @@ public class UserController {
     // }
 
     private ProfileResponse toProfileResponse(User u) {
-        return ProfileResponse.builder()
-                .username(u.getUsername())
-                .email(u.getEmail())
-                .gender(u.getGender())
-                .firstname(u.getFirstname())
-                .surname(u.getSurname())
-                .contact(u.getContact())
-                .build();
+        List<String> roles = u.getRoles().stream().map(Role::name).sorted().toList();
+        return new ProfileResponse(
+                u.getUsername(),
+                u.getEmail(),
+                u.getFirstname(),
+                u.getSurname(),
+                u.getGender(),
+                u.getContact(),
+                roles);
     }
 
     // @GetMapping("/profile")
