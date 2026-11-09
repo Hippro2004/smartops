@@ -2,7 +2,9 @@
 
 import { authApi } from "@/src/lib/api";
 import { getErrorMessage } from "@/src/lib/errors";
+import { validateRegister } from "@/src/lib/validator";
 import { Gender, RegisterInput } from "@/src/types/auth";
+import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,23 +20,24 @@ export default function RegisterForm() {
         surname: "",
         contact: ""
     });
-    const [confirm, setConfirm] = useState("");
+    const [confirm, setConfirm] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
     const [error, setError] = useState<string | null>(null);
+
+
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
 
-        // 1. เช็ครหัสผ่านให้ตรงกันก่อน (และต้องมี return เพื่อหยุดการทำงาน)
-        if (form.password !== confirm) {
-            setError('รหัสผ่านไม่ตรงกัน โปรดลองใหม่อีกครั้ง');
-            return;
+        const message = validateRegister(form, confirm);
+        if (message) {
+            setError(message);
+            return
         }
 
         setLoading(true);
-
         try {
             await authApi.register(form);
             router.push("/");
@@ -61,9 +64,8 @@ export default function RegisterForm() {
                 <input
                     type="text"
                     value={form.username}
-                    onChange={(e) => setForm({ ...form, username: e.target.value })}
+                    onChange={(e) => setForm({ ...form, username: e.target.value.trim() })}
                     className="w-full border border-gray-300 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
                 />
             </div>
 
@@ -73,9 +75,8 @@ export default function RegisterForm() {
                     <input
                         type="password"
                         value={form.password}
-                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                        onChange={(e) => setForm({ ...form, password: e.target.value.trim() })}
                         className="w-full border border-gray-300 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
                     />
                 </div>
                 <div>
@@ -83,9 +84,8 @@ export default function RegisterForm() {
                     <input
                         type="password"
                         value={confirm}
-                        onChange={(e) => setConfirm(e.target.value)}
+                        onChange={(e) => setConfirm(e.target.value.trim())}
                         className="w-full border border-gray-300 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
                     />
                 </div>
             </div>
@@ -96,9 +96,8 @@ export default function RegisterForm() {
                     <input
                         type="text"
                         value={form.firstname}
-                        onChange={(e) => setForm({ ...form, firstname: e.target.value })}
+                        onChange={(e) => setForm({ ...form, firstname: e.target.value.trim() })}
                         className="w-full border border-gray-300 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
                     />
                 </div>
                 <div>
@@ -106,9 +105,8 @@ export default function RegisterForm() {
                     <input
                         type="text"
                         value={form.surname}
-                        onChange={(e) => setForm({ ...form, surname: e.target.value })}
+                        onChange={(e) => setForm({ ...form, surname: e.target.value.trim() })}
                         className="w-full border border-gray-300 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
                     />
                 </div>
             </div>
@@ -118,9 +116,8 @@ export default function RegisterForm() {
                 <input
                     type="email"
                     value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    onChange={(e) => setForm({ ...form, email: e.target.value.trim() })}
                     className="w-full border border-gray-300 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
                 />
             </div>
 
@@ -158,7 +155,6 @@ export default function RegisterForm() {
                     value={form.contact}
                     onChange={(e) => setForm({ ...form, contact: e.target.value })}
                     className="w-full border border-gray-300 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
                 />
             </div>
 
@@ -167,6 +163,7 @@ export default function RegisterForm() {
                 disabled={loading}
                 className="w-full bg-blue-600 text-white p-2.5 rounded-lg font-semibold hover:bg-blue-700 transition duration-200 disabled:bg-blue-300 mt-2"
             >
+                {loading && <CircularProgress size={20} color="inherit" />}
                 {loading ? "Registering..." : "Register"}
             </button>
 

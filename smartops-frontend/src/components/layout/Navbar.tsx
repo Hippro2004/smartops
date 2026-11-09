@@ -3,7 +3,7 @@
 import { authApi } from "@/src/lib/api";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useAuth } from "../auth/AuthProvider";
+import { isAdmin, useAuth } from "../auth/AuthProvider";
 import { tokens } from "@/src/lib/auth";
 
 
@@ -11,12 +11,12 @@ export default function Navbar() {
     const pathname = usePathname()
     const router = useRouter();
 
-    const { clear } = useAuth();
-
+    const { me, clear } = useAuth();
 
     const MENU_ITEMS = [
         { href: '/dashboard', label: 'Dashboard' },
         { href: '/assets', label: 'Assets' },
+        ...(isAdmin(me) ? [{ href: "/admin", label: "admin" }] : []),
     ];
 
     const handleLogout = async () => {

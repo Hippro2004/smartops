@@ -4,7 +4,7 @@ import { getErrorMessage } from '@/src/lib/errors';
 import { LoginInput } from '@/src/types/auth';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useAuth } from './AuthProvider';
+import { isAdmin, useAuth } from './AuthProvider';
 import { tokens } from '@/src/lib/auth';
 
 
@@ -26,8 +26,8 @@ export default function LoginForm() {
             // localStorage.setItem('refresh_token', res.refreshToken)
 
             tokens.save(res);
-            await refreshMe();
-            router.push('/dashboard');
+            const me = await refreshMe();
+            router.push(isAdmin(me) ? '/admin' : "/dashboard");
 
         } catch (error) {
             setError(getErrorMessage(error))

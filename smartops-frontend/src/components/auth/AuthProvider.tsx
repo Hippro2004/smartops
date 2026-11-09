@@ -9,19 +9,21 @@ export interface Me {
     email: string;
     firstname: string;
     surname: string;
+    contact: string;
+    roles: string[];
 }
 
 interface AuthContextValue {
     me: Me | null;
     loading: boolean;
-    refreshMe: () => Promise<void>;
+    refreshMe: () => Promise<Me | null>;
     clear: () => void;
 }
 
 const AuthContext = createContext<AuthContextValue>({
     me: null,
     loading: true,
-    refreshMe: async () => { },
+    refreshMe: async () => null,
     clear: () => { },
 });
 
@@ -33,20 +35,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (!localStorage.getItem('access_token')) {
             setMe(null);
             setLoading(false);
-            return;
+            return null;
         }
 
         if (!tokens.access()) {
             setMe(null);
             setLoading(false);
-            return;
+            return null;
         }
 
         try {
             const { data } = await api.get<Me>('/users/me');
             setMe(data);
+            return data;
         } catch {
             setMe(null);
+            return null;
         } finally {
             setLoading(false);
         }
@@ -66,3 +70,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 }
 
 export const useAuth = () => useContext(AuthContext);
+export const isAdmin = (me: Me | null) => !!me?.roles.includes('ADMIN');
