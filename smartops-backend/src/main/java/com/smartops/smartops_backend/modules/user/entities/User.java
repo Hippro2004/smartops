@@ -51,7 +51,7 @@ public class User {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender", nullable = false, length = 10)
+    @Column(name = "gender", nullable = false, length = 20)
     private Gender gender;
 
     @Column(nullable = false, length = 100)
