@@ -42,7 +42,10 @@ public class BorrowController {
     // .build());
 
     private BorrowResponse toResponse(BorrowRecord b) {
-        return new BorrowResponse(b.getAsset().getName(), b.getBorrowedAt(), b.getStatus());
+        return new BorrowResponse(
+                b.getAsset().getName(),
+                b.getBorrowedAt(),
+                b.getStatus());
     }
 
     @PostMapping("/create")
