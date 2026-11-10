@@ -31,6 +31,12 @@ public enum ErrorCode {
     // --- Token ---
     INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "Invalid or expired refresh token"),
 
+    // --- File ---
+    FILE_EMPTY(HttpStatus.BAD_REQUEST, ""),
+    FILE_TYPE_NOT_ALLOWED(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ""),
+    FILE_TOO_LARGE(HttpStatus.CONTENT_TOO_LARGE, ""),
+    FILE_NOT_FOUND(HttpStatus.NOT_FOUND, ""),
+
     INVALID_STATUS_TRANSITION(HttpStatus.CONFLICT, "Cannot change asset to this status"),
 
     ;
