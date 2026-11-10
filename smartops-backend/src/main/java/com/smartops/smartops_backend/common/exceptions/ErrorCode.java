@@ -6,18 +6,11 @@ public enum ErrorCode {
 
     // --- User ---
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "User not found"),
-    USERNAME_EMPTY(HttpStatus.BAD_REQUEST, "Username is required"),
     USERNAME_TAKEN(HttpStatus.CONFLICT, "Username already exists"),
 
-    EMAIL_EMPTY(HttpStatus.BAD_REQUEST, "Email is required"),
     EMAIL_TAKEN(HttpStatus.CONFLICT, "Email already exists"),
 
-    GENDER_EMPTY(HttpStatus.BAD_REQUEST, "Email is required"),
-
-    CONTACT_EMPTY(HttpStatus.BAD_REQUEST, "Contact is required"),
     CONTACT_TAKEN(HttpStatus.CONFLICT, "Contact already exists"),
-
-    PASSWORD_EMPTY(HttpStatus.BAD_REQUEST, "Password is required"),
 
     INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Invalid username or password"),
     VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "Validation failed"),

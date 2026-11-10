@@ -25,8 +25,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public User save(RequestRegister request) {
-
+    public User create(RequestRegister request) {
         if (userRepo.existsByUsername(request.getUsername())) {
             throw new BusinessException(ErrorCode.USERNAME_TAKEN);
         }
