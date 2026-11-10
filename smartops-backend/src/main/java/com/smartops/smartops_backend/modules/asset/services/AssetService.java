@@ -46,6 +46,10 @@ public class AssetService {
             throw new BusinessException(ErrorCode.ASSET_SERIAL_TAKEN);
         }
 
+        if (request.getDescription() == null && request.getDescription().isBlank()) {
+            throw new BusinessException(ErrorCode.ASSET_DESCRIPTION_EMPTY);
+        }
+
         return assetRepo.save(Asset.builder()
                 .name(request.getName())
                 .serialNumber(request.getSerialNumber())

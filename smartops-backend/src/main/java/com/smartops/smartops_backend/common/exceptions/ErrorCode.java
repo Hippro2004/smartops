@@ -5,10 +5,20 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     // --- User ---
-    USERNAME_TAKEN(HttpStatus.CONFLICT, "Username already exists"),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "User not found"),
+    USERNAME_EMPTY(HttpStatus.BAD_REQUEST, "Username is required"),
+    USERNAME_TAKEN(HttpStatus.CONFLICT, "Username already exists"),
+
+    EMAIL_EMPTY(HttpStatus.BAD_REQUEST, "Email is required"),
     EMAIL_TAKEN(HttpStatus.CONFLICT, "Email already exists"),
+
+    GENDER_EMPTY(HttpStatus.BAD_REQUEST, "Email is required"),
+
+    CONTACT_EMPTY(HttpStatus.BAD_REQUEST, "Contact is required"),
     CONTACT_TAKEN(HttpStatus.CONFLICT, "Contact already exists"),
+
+    PASSWORD_EMPTY(HttpStatus.BAD_REQUEST, "Password is required"),
+
     INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Invalid username or password"),
     VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "Validation failed"),
 
@@ -18,8 +28,9 @@ public enum ErrorCode {
     ASSET_NAME_TAKEN(HttpStatus.CONFLICT, "Asset Name already exists"),
     ASSET_NOT_FOUND(HttpStatus.NOT_FOUND, "Asset not found"),
     ASSET_SERIAL_TAKEN(HttpStatus.CONFLICT, "Asset serial already exists"),
+    ASSET_DESCRIPTION_EMPTY(HttpStatus.BAD_REQUEST, "Description is empty"),
 
-    ASSET_ALREADY_BORROWED(HttpStatus.CONFLICT, "Asset "),
+    ASSET_ALREADY_BORROWED(HttpStatus.CONFLICT, "Asset already borrowed"),
 
     // --- Category ---
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "Category not found"),
@@ -32,10 +43,10 @@ public enum ErrorCode {
     INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "Invalid or expired refresh token"),
 
     // --- File ---
-    FILE_EMPTY(HttpStatus.BAD_REQUEST, ""),
-    FILE_TYPE_NOT_ALLOWED(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ""),
-    FILE_TOO_LARGE(HttpStatus.CONTENT_TOO_LARGE, ""),
-    FILE_NOT_FOUND(HttpStatus.NOT_FOUND, ""),
+    FILE_EMPTY(HttpStatus.BAD_REQUEST, "File is empty"),
+    FILE_TYPE_NOT_ALLOWED(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "File type not allowed"),
+    FILE_TOO_LARGE(HttpStatus.CONTENT_TOO_LARGE, "File size exceeds the limit"),
+    FILE_NOT_FOUND(HttpStatus.NOT_FOUND, "File not found"),
 
     INVALID_STATUS_TRANSITION(HttpStatus.CONFLICT, "Cannot change asset to this status"),
 
