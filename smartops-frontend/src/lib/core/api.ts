@@ -3,6 +3,11 @@ import { LoginInput, LoginResponse, RegisterInput } from "../../types/auth";
 import { tokens } from "../auth/auth";
 import { DashboardStats } from "../../types/assets/dashboard";
 import { ProfileResponse } from "../../types/users/user";
+import {
+  AssetRequest,
+  AssetResponse,
+  PageResponse,
+} from "@/src/types/assets/asset";
 
 let refreshing: Promise<string | null> | null = null;
 
@@ -88,5 +93,33 @@ export const dashboardApi = {
   getStats: async () => {
     const res = await api.get<DashboardStats>("/assets/dashboard");
     return res.data;
+  },
+};
+
+export const assetApi = {
+  list: async () => {
+    const res =
+      await api.get<PageResponse<AssetResponse>>("/assets/all-assets");
+    return res.data.content;
+  },
+  create: async (data: AssetRequest) => {
+    const res = await api.post<AssetResponse>("/assets/create-asset", data);
+    return res.data;
+  },
+  update: async (id: number, data: AssetRequest) => {
+    const res = await api.put<AssetResponse>(`/assets/${id}`, data);
+    return res.data;
+  },
+  remove: async (id: number) => {
+    await api.delete(`/assets/${id}`);
+  },
+};
+
+export const fileApi = {
+  upload: async (file: File) => {
+    const form = new FormData();
+    form.append("file", file);
+    const res = await api.post<{ filename: string }>("/files/upload", form);
+    return res.data.filename;
   },
 };

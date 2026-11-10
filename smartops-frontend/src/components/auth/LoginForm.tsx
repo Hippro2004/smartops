@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { isAdmin, useAuth } from './AuthProvider';
 import { tokens } from '@/src/lib/auth/auth';
-import { getErrorMessage } from '@/src/lib/common/error/errors';
+import { getErrorMessage } from '@/src/lib/common/exceptions/errors';
 import { vaildateLogin } from '@/src/lib/common/validate/validator';
 
 

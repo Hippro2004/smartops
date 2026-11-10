@@ -9,7 +9,16 @@ const ERROR_MESSAGES: Record<string, string> = {
 
   INVALID_CREDENTIALS: "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง",
 
+  // --- asset ---
   ASSET_NOT_FOUND: "ไม่พบอุปกรณ์นี้",
+  ASSET_NAME_TAKEN: "ชื่ออุปกรณ์นี้ถูกใช้แล้ว",
+  ASSET_SERIAL_TAKEN: "รหัสเฉพาะนี้ถูกใช้แล้ว",
+
+  // --- upload image ---
+  FILE_EMPTY: "ไม่พบไฟล์ที่เลือก",
+  FILE_TYPE_NOT_ALLOWED: "รองรับเฉพาะไฟล์ JPG, PNG, WEBP",
+  FILE_TOO_LARGE: "ไฟล์ต้องไม่เกิน 5 MB",
+  FILE_NOT_FOUND: "ไม่พบไฟล์รูปภาพ",
 };
 
 const FALLBACK = "เกิดข้อผิดพลาด ลองใหม่อีกครั้ง";

@@ -2,7 +2,7 @@
 
 import CategoryBars from "@/src/components/dashboard/CategoryBars";
 import StatCard from "@/src/components/dashboard/StatCard";
-import { getErrorMessage } from "@/src/lib/common/error/errors";
+import { getErrorMessage } from "@/src/lib/common/exceptions/errors";
 import { dashboardApi } from "@/src/lib/core/api";
 import { DashboardStats } from "@/src/types/assets/dashboard";
 import { useEffect, useState } from "react";
