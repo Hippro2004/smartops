@@ -1,8 +1,8 @@
 import axios from "axios";
-import { LoginInput, LoginResponse, RegisterInput } from "../../types/auth";
+import { LoginRequest, LoginResponse, RegisterInput } from "../../types/auth";
 import { tokens } from "../auth/auth";
 import { DashboardStats } from "../../types/assets/dashboard";
-import { ProfileResponse } from "../../types/users/user";
+import { ProfileResponse, UpdateProfileRequest } from "../../types/users/user";
 import {
   AssetRequest,
   AssetResponse,
@@ -44,7 +44,7 @@ api.interceptors.response.use(
     }
     original._retried = true;
 
-    // หลาย request ที่ 401 พร้อมกันให้ขอ token ใหม่ครั้งเดียว
+    // Share a single token refresh across concurrent 401 responses.
     refreshing ??= (async () => {
       const refreshToken = tokens.refresh();
       if (!refreshToken) return null;
@@ -74,7 +74,7 @@ api.interceptors.response.use(
 );
 
 export const authApi = {
-  login: async (data: LoginInput) => {
+  login: async (data: LoginRequest) => {
     const res = await api.post("/auth/login", data);
     return res.data;
   },
@@ -91,6 +91,10 @@ export const authApi = {
 export const userApi = {
   me: async () => {
     const res = await api.get<ProfileResponse>("/users/me");
+    return res.data;
+  },
+  updateProfile: async (data: UpdateProfileRequest) => {
+    const res = await api.put<ProfileResponse>("/users/me", data);
     return res.data;
   },
 };

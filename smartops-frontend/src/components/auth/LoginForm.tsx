@@ -86,10 +86,10 @@ export default function LoginForm() {
                 <LoadingButton
                     type="submit"
                     loading={submitting}
-                    loadingText="กำลังเข้าสู่ระบบ..."
+                    loadingText="Signing in..."
                     className="w-full rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-600/20 transition hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                 >
-                    เข้าสู่ระบบ
+                    Sign in
                 </LoadingButton>
             </form>
 

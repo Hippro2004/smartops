@@ -45,7 +45,7 @@ export default function AssetPage() {
     };
 
     const handleDelete = async (asset: AssetResponse) => {
-        if (!window.confirm(`ลบ "${asset.name}" ใช่ไหม? การลบย้อนกลับไม่ได้`)) return;
+        if (!window.confirm(`Delete "${asset.name}"? This action cannot be undone.`)) return;
         setActionError(null);
         setDeletingId(asset.id);
         try {
@@ -63,7 +63,7 @@ export default function AssetPage() {
                 <div>
                     <p className="text-sm font-medium text-blue-700">Inventory</p>
                     <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-900">IT Assets</h1>
-                    <p className="mt-2 text-sm text-slate-500">จัดการและติดตามอุปกรณ์ IT ทั้งหมดในระบบ</p>
+                    <p className="mt-2 text-sm text-slate-500">Manage and track all IT assets in the system.</p>
                 </div>
                 {admin && (
                     <button
@@ -73,7 +73,7 @@ export default function AssetPage() {
                         <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
                             <path d="M10 4v12M4 10h12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                         </svg>
-                        เพิ่มอุปกรณ์
+                        Add asset
                     </button>
                 )}
             </header>
@@ -99,7 +99,7 @@ export default function AssetPage() {
             </section>
 
             {formOpen && (
-                <Modal title={editing ? 'แก้ไขอุปกรณ์' : 'เพิ่มอุปกรณ์'} onClose={closeForm}>
+                <Modal title={editing ? 'Edit asset' : 'Add asset'} onClose={closeForm}>
                     <AssetForm asset={editing} onSubmit={handleSubmit} onCancel={closeForm} />
                 </Modal>
             )}

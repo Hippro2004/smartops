@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 const CARDS = [
-    { href: '/assets', title: 'Assets', desc: 'จัดการอุปกรณ์ IT' },
-    // เพิ่มการ์ดเมนูอื่นตรงนี้
+    { href: '/assets', title: 'Assets', desc: 'Manage IT assets' },
+    // Add other menu cards here.
 ];
 
 export default function DashboardPage() {
@@ -11,7 +11,7 @@ export default function DashboardPage() {
             <header>
                 <p className="text-sm font-medium text-blue-700">Workspace</p>
                 <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-900">Dashboard</h1>
-                <p className="mt-2 text-sm text-slate-500">ภาพรวมการจัดการทรัพย์สิน IT ของคุณ</p>
+                <p className="mt-2 text-sm text-slate-500">An overview of your IT asset management workspace.</p>
             </header>
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
                 {CARDS.map((card) => (

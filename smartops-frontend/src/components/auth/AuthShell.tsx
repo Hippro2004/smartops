@@ -25,10 +25,10 @@ export default function AuthShell({ title, description, children }: Props) {
                                 IT Asset Management
                             </p>
                             <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight">
-                                จัดการอุปกรณ์<br />ได้อย่างเป็นระบบ
+                                Manage your assets<br />with confidence
                             </h1>
                             <p className="mt-4 text-sm leading-6 text-slate-300">
-                                ดูแลทรัพย์สิน IT ของทีมให้ง่ายขึ้น ตั้งแต่การจัดเก็บไปจนถึงการติดตามสถานะ
+                                Simplify IT asset management, from keeping inventory to tracking asset status.
                             </p>
                         </div>
                     </div>

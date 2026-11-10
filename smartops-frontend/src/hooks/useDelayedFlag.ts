@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// แสดงเมื่อ active นานเกิน delay และเมื่อแสดงแล้วค้างไว้อย่างน้อย minDuration
+// Show after active exceeds delay, then keep visible for at least minDuration.
 export function useDelayedFlag(
   active: boolean,
   delay = 200,

@@ -20,8 +20,8 @@ export default function AssetTable({ assets, canEdit, deletingId, onEdit, onDele
                         <path d="M8 9h8M8 12h5m-5 3h8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
                     </svg>
                 </span>
-                <p className="mt-4 font-semibold text-slate-800">ยังไม่มีอุปกรณ์</p>
-                <p className="mt-1 text-sm text-slate-500">อุปกรณ์ที่เพิ่มจะแสดงอยู่ในรายการนี้</p>
+                <p className="mt-4 font-semibold text-slate-800">No assets yet</p>
+                <p className="mt-1 text-sm text-slate-500">Assets you add will appear here.</p>
             </div>
         );
     }
@@ -31,13 +31,13 @@ export default function AssetTable({ assets, canEdit, deletingId, onEdit, onDele
             <table className="w-full border-collapse text-left">
                 <thead>
                     <tr className="border-b border-slate-200 bg-slate-50/80 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                        <th className="px-4 py-3.5">รูป</th>
+                        <th className="px-4 py-3.5">Image</th>
                         <th className="px-4 py-3.5">ID</th>
-                        <th className="px-4 py-3.5">ชื่ออุปกรณ์</th>
+                        <th className="px-4 py-3.5">Asset name</th>
                         <th className="px-4 py-3.5">Serial Number</th>
-                        <th className="px-4 py-3.5">หมวด</th>
-                        <th className="px-4 py-3.5">สถานะ</th>
-                        {canEdit && <th className="px-4 py-3.5 text-right">จัดการ</th>}
+                        <th className="px-4 py-3.5">Category</th>
+                        <th className="px-4 py-3.5">Status</th>
+                        {canEdit && <th className="px-4 py-3.5 text-right">Actions</th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -72,14 +72,14 @@ export default function AssetTable({ assets, canEdit, deletingId, onEdit, onDele
                             {canEdit && (
                                 <td className="space-x-3 px-4 py-3 text-right text-sm">
                                     <button onClick={() => onEdit(asset)} className="rounded-lg px-2 py-1.5 font-medium text-blue-700 transition hover:bg-blue-50">
-                                        แก้ไข
+                                        Edit
                                     </button>
                                     <button
                                         onClick={() => onDelete(asset)}
                                         disabled={deletingId === asset.id}
                                         className="rounded-lg px-2 py-1.5 font-medium text-rose-600 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60"
                                     >
-                                        {deletingId === asset.id ? 'กำลังลบ...' : 'ลบ'}
+                                        {deletingId === asset.id ? 'Deleting...' : 'Delete'}
                                     </button>
                                 </td>
                             )}

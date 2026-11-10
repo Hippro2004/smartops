@@ -3,10 +3,12 @@
 import { api } from '@/src/lib/core/api';
 import { tokens } from '@/src/lib/auth/auth';
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { Gender } from '@/src/types/auth';
 
 export interface Me {
     username: string;
     email: string;
+    gender: Gender;
     firstname: string;
     surname: string;
     contact: string;

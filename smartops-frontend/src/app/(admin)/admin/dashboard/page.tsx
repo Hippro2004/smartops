@@ -44,21 +44,21 @@ export default function AdminDashboardPage() {
         <header>
             <p className="text-sm font-medium text-blue-700">Overview</p>
             <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-900">Admin Dashboard</h1>
-            <p className="mt-2 text-sm text-slate-500">ภาพรวมการใช้งานทรัพย์สินและผู้ใช้ในระบบ</p>
+            <p className="mt-2 text-sm text-slate-500">An overview of assets and users across the system.</p>
         </header>
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <StatCard label="อุปกรณ์ทั้งหมด" value={stats.totalAssets || 0} accent="bg-slate-500" />
-            <StatCard label="ว่าง" value={stats.available || 0} color="text-emerald-700" accent="bg-emerald-500" />
-            <StatCard label="ใช้งานอยู่" value={stats.inUse || 0} color="text-blue-700" accent="bg-blue-500" />
-            <StatCard label="ปลดระวาง" value={stats.retired || 0} color="text-rose-700" accent="bg-rose-500" />
-            <StatCard label="ผู้ใช้ทั้งหมด" value={stats.totalUsers || 0} accent="bg-violet-500" />
+            <StatCard label="Total assets" value={stats.totalAssets || 0} accent="bg-slate-500" />
+            <StatCard label="Available" value={stats.available || 0} color="text-emerald-700" accent="bg-emerald-500" />
+            <StatCard label="In use" value={stats.inUse || 0} color="text-blue-700" accent="bg-blue-500" />
+            <StatCard label="Retired" value={stats.retired || 0} color="text-rose-700" accent="bg-rose-500" />
+            <StatCard label="Total users" value={stats.totalUsers || 0} accent="bg-violet-500" />
         </div>
 
         <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-900/[0.02] sm:p-7">
             <div className="mb-6">
                 <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">Inventory breakdown</p>
-                <h2 className="mt-1 text-lg font-semibold text-slate-900">อุปกรณ์แยกตามหมวด</h2>
+                <h2 className="mt-1 text-lg font-semibold text-slate-900">Assets by category</h2>
             </div>
             <CategoryBars data={stats.byCategory} />
         </section>

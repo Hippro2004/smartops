@@ -126,7 +126,7 @@ export default function RegisterForm() {
             </div>
 
             <div>
-                <p className="mb-2 block text-sm font-medium text-slate-700">เพศ</p>
+                <p className="mb-2 block text-sm font-medium text-slate-700">Gender</p>
                 <div className="flex gap-6 text-sm text-slate-600">
                     <label className="flex items-center gap-2 cursor-pointer">
                         <input
@@ -136,7 +136,7 @@ export default function RegisterForm() {
                             onChange={() => setForm({ ...form, gender: 'MALE' })}
                             className="h-4 w-4 accent-blue-600 focus:ring-blue-500"
                         />
-                        ชาย
+                        Male
                     </label>
 
                     <label className="flex items-center gap-2 cursor-pointer">
@@ -147,7 +147,7 @@ export default function RegisterForm() {
                             onChange={() => setForm({ ...form, gender: 'FEMALE' })}
                             className="h-4 w-4 accent-blue-600 focus:ring-blue-500"
                         />
-                        หญิง
+                        Female
                     </label>
                 </div>
             </div>
@@ -166,16 +166,16 @@ export default function RegisterForm() {
             <LoadingButton
                 type="submit"
                 loading={loading}
-                loadingText="กำลังสมัคร..."
+                loadingText="Creating account..."
                 className="mt-2 w-full rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-600/20 transition hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/20"
             >
                 Register
             </LoadingButton>
 
             <div className="mt-5 border-t border-slate-100 pt-5 text-center text-sm text-slate-500">
-                มีบัญชีอยู่แล้วใช่ไหม?{' '}
+                Already have an account?{' '}
                 <ProgressLink href="/login" className="font-semibold text-blue-700 hover:text-blue-800 hover:underline">
-                    เข้าสู่ระบบ (Sign in)
+                    Sign in
                 </ProgressLink>
             </div>
         </form>

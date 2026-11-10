@@ -40,14 +40,14 @@ export default function Modal({ title, onClose, children }: ModalProps) {
                                 {title}
                             </h2>
                             <p className="mt-1 text-sm text-slate-500">
-                                จัดการข้อมูลอุปกรณ์และรายละเอียดสำหรับคลัง IT
+                                Manage asset information and inventory details.
                             </p>
                         </div>
                     </div>
                     <button
                         type="button"
                         onClick={onClose}
-                        aria-label="ปิดหน้าต่าง"
+                        aria-label="Close dialog"
                         className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">

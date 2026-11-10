@@ -9,7 +9,7 @@ import LoadingButton from '../ui/LoadingButton';
 
 
 interface Props {
-    asset?: AssetRequest | null;          // มี = โหมดแก้ไข, ไม่มี = โหมดเพิ่ม
+    asset?: AssetRequest | null;          // Present for edit mode; absent for create mode.
     onSubmit: (data: AssetRequest) => Promise<void>;
     onCancel: () => void;
 }
@@ -59,21 +59,21 @@ export default function AssetForm({ asset, onSubmit, onCancel }: Props) {
             <div className="grid gap-6 md:grid-cols-[minmax(0,1.35fr)_minmax(250px,0.9fr)]">
                 <section className="space-y-5">
                     <div className="space-y-1">
-                        <h3 className="text-sm font-semibold text-slate-900">ข้อมูลอุปกรณ์</h3>
-                        <p className="text-xs text-slate-500">ระบุชื่อและรหัสสำหรับค้นหาอุปกรณ์</p>
+                        <h3 className="text-sm font-semibold text-slate-900">Asset information</h3>
+                        <p className="text-xs text-slate-500">Enter a name and identifier to find this asset.</p>
                     </div>
 
                     <div className="space-y-4">
                         <div>
                             <label htmlFor="asset-name" className="mb-1.5 block text-sm font-medium text-slate-700">
-                                ชื่ออุปกรณ์ <span className="text-rose-500">*</span>
+                                Asset name <span className="text-rose-500">*</span>
                             </label>
                             <input
                                 id="asset-name"
                                 type="text"
                                 value={form.name}
                                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                                placeholder="เช่น MacBook Pro 14-inch"
+                                placeholder="e.g. MacBook Pro 14-inch"
                                 autoComplete="off"
                                 className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                             />
@@ -88,23 +88,23 @@ export default function AssetForm({ asset, onSubmit, onCancel }: Props) {
                                 type="text"
                                 value={form.serialNumber}
                                 onChange={(e) => setForm({ ...form, serialNumber: e.target.value })}
-                                placeholder="เช่น C02XYZ123ABC"
+                                placeholder="e.g. C02XYZ123ABC"
                                 autoComplete="off"
                                 className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 font-mono text-sm text-slate-900 outline-none transition placeholder:font-sans placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                             />
-                            <p className="mt-1.5 text-xs text-slate-500">ใช้ระบุอุปกรณ์แต่ละชิ้นและต้องไม่ซ้ำกัน</p>
+                            <p className="mt-1.5 text-xs text-slate-500">Identifies each asset and must be unique.</p>
                         </div>
 
                         <div>
                             <label htmlFor="asset-description" className="mb-1.5 block text-sm font-medium text-slate-700">
-                                รายละเอียด <span className="text-rose-500">*</span>
+                                Description <span className="text-rose-500">*</span>
                             </label>
                             <textarea
                                 id="asset-description"
                                 value={form.description}
                                 onChange={(e) => setForm({ ...form, description: e.target.value })}
                                 rows={4}
-                                placeholder="ระบุสเปกหรือรายละเอียดเพิ่มเติมของอุปกรณ์"
+                                placeholder="Enter the specifications or additional asset details."
                                 className="w-full resize-y rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                             />
                         </div>
@@ -113,14 +113,14 @@ export default function AssetForm({ asset, onSubmit, onCancel }: Props) {
 
                 <section className="space-y-5">
                     <div className="space-y-1">
-                        <h3 className="text-sm font-semibold text-slate-900">จัดหมวดหมู่และรูปภาพ</h3>
-                        <p className="text-xs text-slate-500">ช่วยให้แยกประเภทและระบุอุปกรณ์ได้ง่ายขึ้น</p>
+                        <h3 className="text-sm font-semibold text-slate-900">Category and image</h3>
+                        <p className="text-xs text-slate-500">Make assets easier to identify and organize.</p>
                     </div>
 
                     <div className="space-y-4">
                         <div>
                             <label htmlFor="asset-category" className="mb-1.5 block text-sm font-medium text-slate-700">
-                                หมวดหมู่ <span className="text-rose-500">*</span>
+                                Category <span className="text-rose-500">*</span>
                             </label>
                             <select
                                 id="asset-category"
@@ -139,7 +139,7 @@ export default function AssetForm({ asset, onSubmit, onCancel }: Props) {
                         {isEdit && (
                             <div>
                                 <label htmlFor="asset-status" className="mb-1.5 block text-sm font-medium text-slate-700">
-                                    สถานะ
+                                    Status
                                 </label>
                                 <select
                                     id="asset-status"
@@ -180,16 +180,16 @@ export default function AssetForm({ asset, onSubmit, onCancel }: Props) {
                     onClick={onCancel}
                     className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200"
                 >
-                    ยกเลิก
+                    Cancel
                 </button>
                 <LoadingButton
                     type="submit"
                     loading={submitting}
                     disabled={uploading}
-                    loadingText="กำลังบันทึก..."
+                    loadingText="Saving..."
                     className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-600/20 transition hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                 >
-                    {isEdit ? 'บันทึกการแก้ไข' : 'เพิ่มอุปกรณ์'}
+                    {isEdit ? 'Save changes' : 'Add asset'}
                 </LoadingButton>
             </div>
         </form>
