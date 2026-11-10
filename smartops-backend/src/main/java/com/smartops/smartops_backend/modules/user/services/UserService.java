@@ -26,7 +26,9 @@ public class UserService {
 
     @Transactional
     public User create(RequestRegister request) {
-        if (userRepo.existsByUsername(request.getUsername())) {
+        String username = request.getUsername().trim().toLowerCase();
+
+        if (userRepo.existsByUsername(username)) {
             throw new BusinessException(ErrorCode.USERNAME_TAKEN);
         }
 
@@ -50,7 +52,8 @@ public class UserService {
     }
 
     public User login(String username, String password) {
-        return userRepo.findByUsername(username).filter(user -> passwordEncoder.matches(password, user.getPassword()))
+        return userRepo.findByUsername(username.trim().toLowerCase())
+                .filter(user -> passwordEncoder.matches(password, user.getPassword()))
                 .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_CREDENTIALS));
     }
 
@@ -59,14 +62,16 @@ public class UserService {
     }
 
     public User getByUsername(String name) {
-        return userRepo.findByUsername(name).orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+        return userRepo.findByUsername(name.trim().toLowerCase())
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 
     public User updateProfile(String username, UpdateUser request) {
-        User user = userRepo.findByUsername(username)
+        String usernameToLower = username.trim().toLowerCase();
+        User user = userRepo.findByUsername(usernameToLower)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
-        if (userRepo.existsByContactAndUsernameNot(request.getContact(), username)) {
+        if (userRepo.existsByContactAndUsernameNot(request.getContact(), usernameToLower)) {
             throw new BusinessException(ErrorCode.CONTACT_TAKEN);
         }
 

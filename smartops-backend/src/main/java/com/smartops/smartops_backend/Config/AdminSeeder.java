@@ -52,9 +52,9 @@ public class AdminSeeder implements ApplicationRunner {
         }
 
         User admin = User.builder()
-                .username(username)
+                .username(username.trim().toLowerCase())
                 .email(email)
-                .password(passwordEncoder.encode(password))
+                .password(passwordEncoder.encode(password.trim().toLowerCase()))
                 .firstname("Admin")
                 .surname("System")
                 .gender(Gender.UNSPECIFIED)
