@@ -1,4 +1,4 @@
-import { Gender } from "./auth";
+import { Gender } from "../auth";
 
 export interface ProfileResponse {
   username: string;

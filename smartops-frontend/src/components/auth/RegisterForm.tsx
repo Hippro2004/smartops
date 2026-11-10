@@ -3,7 +3,7 @@
 import { authApi } from "@/src/lib/api";
 import { getErrorMessage } from "@/src/lib/errors";
 import { validateRegister } from "@/src/lib/validator";
-import { Gender, RegisterInput } from "@/src/types/auth";
+import { RegisterInput } from "@/src/types/auth";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,7 +15,7 @@ export default function RegisterForm() {
         username: "",
         password: "",
         email: "",
-        gender: '' as Gender,
+        gender: null,
         firstname: "",
         surname: "",
         contact: ""

@@ -1,4 +1,4 @@
-import { RegisterInput } from "../types/auth";
+import { LoginInput, RegisterInput } from "../types/auth";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^0\d{9}$/;
@@ -11,6 +11,7 @@ export function validateRegister(
   const firstname = form.firstname.trim();
   const surname = form.surname.trim();
   const email = form.email.trim();
+  const gender = form.gender;
   const contact = form.contact.trim();
 
   // username
@@ -29,6 +30,11 @@ export function validateRegister(
   if (email.length === 0) return "กรุณากรอกอีเมล";
   if (!EMAIL_PATTERN.test(email)) return "รูปแบบอีเมลไม่ถูกต้อง";
 
+  // เพศ
+  if (!gender) {
+    return "กรุณาเลือกเพศ";
+  }
+
   // เบอร์โทร
   if (contact.length === 0) return "กรุณากรอกเบอร์โทรศัพท์";
   if (!PHONE_PATTERN.test(contact))
@@ -39,6 +45,17 @@ export function validateRegister(
   if (form.password.length < 8 || form.password.length > 50)
     return "รหัสผ่านต้องมี 8 - 50 ตัวอักษร";
   if (form.password !== confirm) return "รหัสผ่านไม่ตรงกัน โปรดลองใหม่อีกครั้ง";
+
+  return null;
+}
+
+export function vaildateLogin(form: LoginInput): string | null {
+  const username = form.username.trim();
+  const password = form.password.trim();
+
+  if (username.length === 0) return "กรุณากรอกชื่อผู้ใช้";
+
+  if (password.length === 0) return "กรุณากรอกรหัสผ่าน";
 
   return null;
 }

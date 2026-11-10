@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { isAdmin, useAuth } from './AuthProvider';
 import { tokens } from '@/src/lib/auth';
+import { vaildateLogin } from '@/src/lib/validator';
 
 
 export default function LoginForm() {
@@ -17,8 +18,15 @@ export default function LoginForm() {
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        setSubmitting(true)
         setError(null);
+
+        const message = vaildateLogin(form);
+        if (message) {
+            setError(message)
+            return;
+        }
+
+        setSubmitting(true)
 
         try {
             const res = await authApi.login(form);
@@ -55,7 +63,6 @@ export default function LoginForm() {
                         value={form.username}
                         onChange={(e) => setForm({ ...form, username: e.target.value })}
                         className="w-full border p-2 rounded"
-                        required
                     />
                 </div>
 
@@ -68,7 +75,6 @@ export default function LoginForm() {
                         value={form.password}
                         onChange={(e) => setForm({ ...form, password: e.target.value })}
                         className="w-full border p-2 rounded"
-                        required
                     />
                 </div>
 

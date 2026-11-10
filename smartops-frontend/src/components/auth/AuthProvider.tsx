@@ -32,11 +32,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [loading, setLoading] = useState(true);
 
     const refreshMe = useCallback(async () => {
-        if (!localStorage.getItem('access_token')) {
-            setMe(null);
-            setLoading(false);
-            return null;
-        }
 
         if (!tokens.access()) {
             setMe(null);

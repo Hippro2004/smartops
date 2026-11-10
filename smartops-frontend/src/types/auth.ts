@@ -16,7 +16,7 @@ export interface RegisterInput {
   username: string;
   password: string;
   email: string;
-  gender: Gender;
+  gender: Gender | null;
   firstname: string;
   surname: string;
   contact: string;
