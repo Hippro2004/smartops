@@ -1,7 +1,7 @@
 'use client';
 
-import { api } from '@/src/lib/api';
-import { tokens } from '@/src/lib/auth';
+import { api } from '@/src/lib/core/api';
+import { tokens } from '@/src/lib/auth/auth';
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 export interface Me {
@@ -51,7 +51,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
     }, []);
 
-    const clear = useCallback(() => setMe(null), []);
+    const clear = useCallback(() => {
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        setMe(null)
+    }, []);
 
     useEffect(() => {
         refreshMe();

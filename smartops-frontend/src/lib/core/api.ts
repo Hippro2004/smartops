@@ -1,8 +1,8 @@
 import axios from "axios";
-import { LoginInput, LoginResponse, RegisterInput } from "../types/auth";
-import { tokens } from "./auth";
-import { DashboardStats } from "../types/assets/dashboard";
-import { ProfileResponse } from "../types/users/user";
+import { LoginInput, LoginResponse, RegisterInput } from "../../types/auth";
+import { tokens } from "../auth/auth";
+import { DashboardStats } from "../../types/assets/dashboard";
+import { ProfileResponse } from "../../types/users/user";
 
 let refreshing: Promise<string | null> | null = null;
 
@@ -67,9 +67,11 @@ export const authApi = {
     const res = await api.post("/auth/login", data);
     return res.data;
   },
+
   register: async (data: RegisterInput) => {
     await api.post("/users/register", data);
   },
+
   logout: async (refreshToken: string) => {
     await api.post("/auth/logout", { refreshToken });
   },
@@ -85,5 +87,6 @@ export const userApi = {
 export const dashboardApi = {
   getStats: async () => {
     const res = await api.get<DashboardStats>("/assets/dashboard");
+    return res.data;
   },
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import { authApi } from "@/src/lib/api";
+import { authApi } from "@/src/lib/core/api";
 import { getErrorMessage } from "@/src/lib/errors";
 import { validateRegister } from "@/src/lib/validator";
 import { RegisterInput } from "@/src/types/auth";

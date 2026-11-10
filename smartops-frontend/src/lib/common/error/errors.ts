@@ -1,5 +1,5 @@
+import { ApiError } from "@/src/types/error";
 import axios from "axios";
-import { ApiError } from "../types/error";
 
 const ERROR_MESSAGES: Record<string, string> = {
   // --- user ---

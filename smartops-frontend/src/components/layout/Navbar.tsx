@@ -1,10 +1,10 @@
 'use client';
 
-import { authApi } from "@/src/lib/api";
+import { authApi } from "@/src/lib/core/api";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { isAdmin, useAuth } from "../auth/AuthProvider";
-import { tokens } from "@/src/lib/auth";
+import { tokens } from "@/src/lib/auth/auth";
 
 
 export default function Navbar() {
@@ -21,13 +21,18 @@ export default function Navbar() {
 
     const handleLogout = async () => {
         const refreshToken = tokens.refresh();
-        if (refreshToken) {
-            await authApi.logout(refreshToken).catch(() => { });
-        }
-        tokens.clear();
-        clear();
 
-        router.push("/login")
+        try {
+            if (refreshToken) await authApi.logout(refreshToken);
+
+        } catch (error) {
+
+        } finally {
+            clear();
+            router.push("/login")
+
+        }
+
     }
 
     return (
