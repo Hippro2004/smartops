@@ -1,6 +1,6 @@
 # 🚀 SmartOps - Internal Developer Platform & Asset Management
 
-SmartOps คือระบบบริหารจัดการทรัพยากร พนักงาน และกระบวนการทำงานภายในองค์กรแบบครบวงจร
+SmartOps is an internal platform for managing organizational resources, employees, and workflows.
 
 ## 🏗️ Architecture & Tech Stack
 

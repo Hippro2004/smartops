@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => RegisterScreen()),
                 );
               },
-              child: Text("ไปหน้าสมัครสมาชิก"),
+              child: Text("Go to registration"),
             ),
 
             SizedBox(height: 16),

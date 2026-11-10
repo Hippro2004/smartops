@@ -1,16 +1,20 @@
 String messageFor(String code) {
   switch (code) {
     case "USERNAME_TAKEN":
-      return "Username นี้ถูกใช้ไปแล้ว";
+      return "This username is already in use.";
     case 'EMAIL_TAKEN':
-      return 'Email นี้ถูกใช้แล้ว';
+      return 'This email address is already in use.';
     case 'INVALID_CREDENTIALS':
-      return 'Username หรือรหัสผ่านไม่ถูกต้อง';
+      return 'The username or password is incorrect.';
+    case 'INVALID_CURRENT_PASSWORD':
+      return 'The current password is incorrect.';
+    case 'CONTACT_TAKEN':
+      return 'This contact number is already in use.';
     case 'VALIDATION_FAILED':
-      return 'ข้อมูลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง';
+      return 'Invalid information. Please check your entries.';
     case 'NETWORK_ERROR':
-      return 'เชื่อมต่อเซิร์ฟเวอร์ไม่ได้';
+      return 'Unable to connect to the server.';
     default:
-      return "ระบบขัดข้อง กรุณาลองใหม่ภายหลัง";
+      return "Something went wrong. Please try again later.";
   }
 }
