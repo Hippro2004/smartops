@@ -1,1 +1,31 @@
 @import "tailwindcss";
+@keyframes spinner-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner-dash {
+  0% {
+    stroke-dasharray: 1px, 200px;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -15px;
+  }
+  100% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -125px;
+  }
+}
+
+.spinner-material {
+  animation: spinner-rotate 1.4s linear infinite;
+}
+
+.spinner-material circle {
+  stroke-linecap: round;
+  stroke-dasharray: 80px, 200px;
+  animation: spinner-dash 1.4s ease-in-out infinite;
+}

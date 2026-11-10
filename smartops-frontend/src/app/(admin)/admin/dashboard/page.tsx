@@ -2,6 +2,7 @@
 
 import CategoryBars from "@/src/components/dashboard/CategoryBars";
 import StatCard from "@/src/components/dashboard/StatCard";
+import PageLoader from "@/src/components/ui/PageLoader";
 import { getErrorMessage } from "@/src/lib/common/exceptions/errors";
 import { dashboardApi } from "@/src/lib/core/api";
 import { DashboardStats } from "@/src/types/assets/dashboard";
@@ -25,6 +26,7 @@ export default function AdminDashboardPage() {
     if (!stats) return null;
 
     return (<div className="space-y-8">
+        {loading && <PageLoader />}
         <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">

@@ -8,6 +8,7 @@ import AssetTable from '@/src/components/assets/AssetTable';
 import { isAdmin, useAuth } from '@/src/components/auth/AuthProvider';
 import { AssetRequest, AssetResponse } from '@/src/types/assets/asset';
 import { getErrorMessage } from '@/src/lib/common/exceptions/errors';
+import PageLoader from '@/src/components/ui/PageLoader';
 
 export default function AssetPage() {
     const { me } = useAuth();
@@ -54,6 +55,7 @@ export default function AssetPage() {
 
     return (
         <div className="space-y-6">
+            {loading && <PageLoader />}
             <div className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold text-gray-800">IT Assets</h1>
                 {admin && (

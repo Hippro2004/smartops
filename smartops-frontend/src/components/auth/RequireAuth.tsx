@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useAuth } from "./AuthProvider";
 import { useEffect } from "react";
+import PageLoader from "../ui/PageLoader";
 
 
 export default function RequireAuth({ children }: { children: React.ReactNode }) {
@@ -12,6 +13,6 @@ export default function RequireAuth({ children }: { children: React.ReactNode })
         if (!loading && !me) router.replace('/login');
     }, [loading, me, router]);
 
-    if (loading || !me) return <p className="p-6 text-gray-500">กำลังตรวจสอบสิทธิ์...</p>;
+    if (loading || !me) return <PageLoader fullscreen></PageLoader>;
     return <>{children}</>;
 }
