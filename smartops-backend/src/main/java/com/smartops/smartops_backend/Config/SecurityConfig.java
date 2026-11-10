@@ -47,6 +47,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,
                                 "/users/register", "/auth/login", "/auth/refresh", "/auth/logout")
                         .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/files/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/files").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/assets/**").authenticated()
                         .requestMatchers("/assets/**").hasRole("ADMIN")

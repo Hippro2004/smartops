@@ -28,6 +28,8 @@ public class AssetService {
 
     private final AssetRepo assetRepo;
     private final UserService userService;
+    private final StorageService storageService;
+
     private static final Map<AssetStatus, Set<AssetStatus>> ASSET_STATUS = Map.of(
             AssetStatus.AVAILABLE, Set.of(AssetStatus.IN_USE, AssetStatus.UNDER_MAINTENANCE, AssetStatus.RETIRED),
             AssetStatus.IN_USE, Set.of(AssetStatus.AVAILABLE, AssetStatus.UNDER_MAINTENANCE),
@@ -47,6 +49,7 @@ public class AssetService {
         return assetRepo.save(Asset.builder()
                 .name(request.getName())
                 .serialNumber(request.getSerialNumber())
+                .image(request.getImage())
                 .description(request.getDescription())
                 .category(request.getCatetory())
                 .status(AssetStatus.AVAILABLE)
@@ -79,6 +82,10 @@ public class AssetService {
             throw new BusinessException(ErrorCode.ASSET_SERIAL_TAKEN);
         }
 
+        String oldImage = asset.getImage();
+        if (oldImage != null && !oldImage.equals(request.getImage()))
+            storageService.delete(oldImage);
+
         asset.setName(request.getName());
         asset.setSerialNumber(request.getSerialNumber());
         asset.setCategory(request.getCategory());
@@ -89,9 +96,13 @@ public class AssetService {
 
     @Transactional
     public void deleteAsset(long id) {
-        if (!assetRepo.existsById(id))
+        Asset asset = assetRepo.findById(id).orElseThrow(() -> new BusinessException(ErrorCode.ASSET_NOT_FOUND));
+
+        if (!assetRepo.existsById(asset.getId()))
             throw new BusinessException(ErrorCode.ASSET_NOT_FOUND);
+
         assetRepo.deleteById(id);
+        storageService.delete(asset.getImage());
     }
 
     @Transactional

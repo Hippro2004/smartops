@@ -31,7 +31,7 @@ public class Asset {
     @Column(nullable = false, unique = true)
     private String serialNumber;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String image;
 
     @Enumerated(EnumType.STRING)
