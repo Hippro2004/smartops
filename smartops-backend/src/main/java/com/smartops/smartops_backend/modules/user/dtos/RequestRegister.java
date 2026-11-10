@@ -22,7 +22,7 @@ public class RequestRegister {
     private String username;
 
     @NotBlank(message = "กรุณากรอกรหัสผ่าน")
-    @Size(min = 8, message = "รหัสต้องตั้งแต่ 8 ตัวอักษรขึ้นไป")
+    @Size(min = 8, max = 32, message = "รหัสผ่านต้องมี 8 - 32 ตัวอักษร")
     private String password;
 
     @NotBlank(message = "กรุณากรอกรหัสผ่าน")

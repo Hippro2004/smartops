@@ -12,22 +12,22 @@ import lombok.Setter;
 @Setter
 public class UpdateUser {
 
-    @NotBlank
-    @Size(min = 8, max = 32)
+    @NotBlank(message = "กรุณากรอกรหัสผ่าน")
+    @Size(min = 8, max = 32, message = "รหัสผ่านต้องมี 8 - 32 ตัวอักษร")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "กรุณากรอกชื่อ")
     @Size(max = 50)
     private String firstname;
 
-    @NotBlank
+    @NotBlank(message = "กรุณากรอกนามสกุล")
     @Size(max = 50)
     private String surname;
 
-    @NotNull
+    @NotNull(message = "กรุณาเลือกเพศ")
     private Gender gender;
 
-    @NotBlank
+    @NotBlank(message = "กรุณากรอกเบอร์ติดต่อ")
     @Size(max = 10)
     private String contact;
 
