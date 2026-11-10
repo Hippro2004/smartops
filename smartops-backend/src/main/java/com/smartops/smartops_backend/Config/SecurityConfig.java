@@ -30,6 +30,7 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of("http://localhost:3000"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
@@ -43,15 +44,25 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // ปิดได้เพราะใช้ header ไม่ใช่ cookie session
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers(HttpMethod.POST,
-                                "/users/register", "/auth/login", "/auth/refresh", "/auth/logout")
+                        .requestMatchers(HttpMethod.POST, "/users/register", "/auth/login", "/auth/refresh",
+                                "/auth/logout")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/files/**").permitAll()
+
+                        // Admin Only Endpoints
                         .requestMatchers(HttpMethod.POST, "/files").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/assets/**").authenticated()
-                        .requestMatchers("/assets/**").hasRole("ADMIN")
+
+                        // Assets Rules (เรียงจากเฉพาะเจาะจงไปภาพรวม)
+                        .requestMatchers(HttpMethod.GET, "/assets/**").authenticated() // User ทั่วไปหรือ Admin ที่
+                                                                                       // login แล้วเรียกดูได้
+                        .requestMatchers(HttpMethod.POST, "/assets/**").hasRole("ADMIN") // เฉพาะ ADMIN
+                                                                                         // เท่านั้นที่สร้าง/แก้ไขได้
+                                                                                         // (หรือปรับตามต้องการ)
+
+                        // All other requests must be authenticated
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth -> oauth
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter()))

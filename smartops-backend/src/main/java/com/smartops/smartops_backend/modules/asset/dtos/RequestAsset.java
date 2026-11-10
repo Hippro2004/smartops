@@ -30,7 +30,7 @@ public class RequestAsset {
     private String image;
 
     @NotNull
-    private AssetCatetory catetory;
+    private AssetCatetory category;
 
     @NotNull
     private AssetStatus status;

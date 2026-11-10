@@ -51,7 +51,7 @@ public class AssetService {
                 .serialNumber(request.getSerialNumber())
                 .image(request.getImage())
                 .description(request.getDescription())
-                .category(request.getCatetory())
+                .category(request.getCategory())
                 .status(AssetStatus.AVAILABLE)
                 .build());
     }
