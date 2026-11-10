@@ -63,6 +63,6 @@ public class AdminSeeder implements ApplicationRunner {
                 .build();
 
         userRepo.save(admin);
-        log.info("Created admin user '{}'", username); // ไม่ log รหัสผ่าน
+        log.info("Created admin user '{}'", username); // Never log the password.
     }
 }

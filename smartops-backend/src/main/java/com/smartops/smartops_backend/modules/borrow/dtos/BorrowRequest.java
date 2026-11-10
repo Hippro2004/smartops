@@ -18,10 +18,10 @@ public class BorrowRequest {
     // @NotNull
     // private Long userId;
 
-    @NotNull(message = "กรุณากรอกรหัสสินทรัพย์")
+    @NotNull(message = "Asset ID is required.")
     private Long assetId;
 
-    @NotNull(message = "กรุณาใส่เวลา")
+    @NotNull(message = "Due date and time are required.")
     @Future
     private Instant dueAt;
 

@@ -21,8 +21,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/users")
@@ -71,10 +71,11 @@ public class UserController {
         return toProfileResponse(user);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<ProfileResponse> updateProfileUser(@RequestHeader String name,
+    @PutMapping("/me")
+    public ResponseEntity<ProfileResponse> updateProfileUser(@AuthenticationPrincipal Jwt jwt,
             @RequestBody @Validated UpdateUser request) {
-        return ResponseEntity.ok(toProfileResponse(userService.updateProfile(name, request)));
+        Long userId = Long.valueOf(jwt.getSubject());
+        return ResponseEntity.ok(toProfileResponse(userService.updateProfile(userId, request)));
     }
 
 }

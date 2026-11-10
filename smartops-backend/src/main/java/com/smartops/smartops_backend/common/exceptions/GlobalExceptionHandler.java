@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    // 1) error ที่เราตั้งใจโยนเอง (ซ้ำ, รหัสผิด ฯลฯ)
+    // 1) Explicit business errors (duplicates, invalid credentials, etc.).
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusiness(BusinessException ex) {
         ErrorCode ec = ex.getErrorCode();
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
                 .body(ErrorResponse.of(ec.name(), ec.getMessage()));
     }
 
-    // 2) @Validated ไม่ผ่าน -> บอกว่าช่องไหนผิด
+    // 2) Validation failures identify the invalid fields.
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new LinkedHashMap<>();
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
                 .body(ErrorResponse.of(ec.name(), ec.getMessage(), errors));
     }
 
-    // 3) ที่เหลือทั้งหมด: log เต็มฝั่ง server แต่ไม่ส่งรายละเอียดออกไป
+    // 3) Log unexpected errors on the server without exposing internal details.
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleUnexpected(Exception ex) {
         log.error("Unexpected error", ex);

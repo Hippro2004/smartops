@@ -41,7 +41,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable()) // ปิดได้เพราะใช้ header ไม่ใช่ cookie session
+                .csrf(csrf -> csrf.disable()) // Requests use authorization headers rather than cookie sessions.
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
 
@@ -55,12 +55,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/files").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 
-                        // Assets Rules (เรียงจากเฉพาะเจาะจงไปภาพรวม)
-                        .requestMatchers(HttpMethod.GET, "/assets/**").authenticated() // User ทั่วไปหรือ Admin ที่
-                                                                                       // login แล้วเรียกดูได้
-                        .requestMatchers(HttpMethod.POST, "/assets/**").hasRole("ADMIN") // เฉพาะ ADMIN
-                                                                                         // เท่านั้นที่สร้าง/แก้ไขได้
-                                                                                         // (หรือปรับตามต้องการ)
+                        // Asset rules are ordered from most specific to least specific.
+                        .requestMatchers(HttpMethod.GET, "/assets/**").authenticated() // Authenticated users and admins can view assets.
+                        .requestMatchers(HttpMethod.POST, "/assets/**").hasRole("ADMIN") // Only admins can create or modify assets.
 
                         // All other requests must be authenticated
                         .anyRequest().authenticated())
@@ -81,7 +78,7 @@ public class SecurityConfig {
     private JwtAuthenticationConverter jwtAuthConverter() {
         JwtGrantedAuthoritiesConverter authorities = new JwtGrantedAuthoritiesConverter();
         authorities.setAuthoritiesClaimName("roles");
-        authorities.setAuthorityPrefix("ROLE_"); // ให้ hasRole("ADMIN") ใช้ได้
+        authorities.setAuthorityPrefix("ROLE_"); // Required by hasRole("ADMIN").
 
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
         converter.setJwtGrantedAuthoritiesConverter(authorities);

@@ -16,32 +16,32 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestRegister {
 
-    @NotBlank(message = "กรุณากรอกชื่อผู้ใช้")
-    @Size(min = 8, max = 50, message = "ชื่อผู้ใช้ต้องมี 8 - 50 ตัวอักษร")
-    @Pattern(regexp = "^[A-Za-z0-9._-]*$", message = "ใช้ได้เฉพาะ a-z, 0-9 และ . _ -")
+    @NotBlank(message = "Username is required.")
+    @Size(min = 8, max = 50, message = "Username must be 8–50 characters long.")
+    @Pattern(regexp = "^[A-Za-z0-9._-]*$", message = "Only a-z, 0-9, period, underscore, and hyphen are allowed.")
     private String username;
 
-    @NotBlank(message = "กรุณากรอกรหัสผ่าน")
-    @Size(min = 8, max = 32, message = "รหัสผ่านต้องมี 8 - 32 ตัวอักษร")
+    @NotBlank(message = "Password is required.")
+    @Size(min = 8, max = 32, message = "Password must be 8–32 characters long.")
     private String password;
 
-    @NotBlank(message = "กรุณากรอกรหัสผ่าน")
-    @Size(max = 254, message = "อีเมลยาวเกินไป")
-    @Email(message = "รูปแบบอีเมลไม่ถูกต้อง")
+    @NotBlank(message = "Email is required.")
+    @Size(max = 254, message = "Email must not exceed 254 characters.")
+    @Email(message = "Enter a valid email address.")
     private String email;
 
-    @NotNull(message = "กรุณาเลือกเพศ")
+    @NotNull(message = "Gender is required.")
     private Gender gender;
 
-    @NotBlank(message = "กรุณากรอกชื่อ")
+    @NotBlank(message = "First name is required.")
     @Size(max = 50)
     private String firstname;
 
-    @NotBlank(message = "กรุณากรอกนามสกุล")
+    @NotBlank(message = "Last name is required.")
     @Size(max = 50)
     private String surname;
 
-    @NotBlank(message = "กรุณากรอกเบอร์ติดต่อ")
+    @NotBlank(message = "Contact number is required.")
     @Size(max = 10)
     private String contact;
 

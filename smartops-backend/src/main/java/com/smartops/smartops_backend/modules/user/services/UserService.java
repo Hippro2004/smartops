@@ -66,23 +66,25 @@ public class UserService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 
-    public User updateProfile(String username, UpdateUser request) {
-        String usernameToLower = username.trim().toLowerCase();
-        User user = userRepo.findByUsername(usernameToLower)
-                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+    @Transactional
+    public User updateProfile(Long userId, UpdateUser request) {
+        User user = getById(userId);
 
-        if (userRepo.existsByContactAndUsernameNot(request.getContact(), usernameToLower)) {
+        if (userRepo.existsByContactAndUsernameNot(request.getContact(), user.getUsername())) {
             throw new BusinessException(ErrorCode.CONTACT_TAKEN);
         }
 
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+            throw new BusinessException(ErrorCode.INVALID_CURRENT_PASSWORD);
+        }
+
         user.setFirstname(request.getFirstname());
         user.setSurname(request.getSurname());
         user.setGender(request.getGender());
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         user.setContact(request.getContact());
 
         return user;
-
     }
 
     public long getUserCount() {

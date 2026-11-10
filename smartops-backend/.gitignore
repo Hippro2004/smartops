@@ -4,7 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# ความลับ ห้าม commit
+# Secrets must not be committed.
 .env
 .vscode/launch.json
 

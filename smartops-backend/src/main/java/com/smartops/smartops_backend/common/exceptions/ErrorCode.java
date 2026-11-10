@@ -13,6 +13,7 @@ public enum ErrorCode {
     CONTACT_TAKEN(HttpStatus.CONFLICT, "Contact already exists"),
 
     INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Invalid username or password"),
+    INVALID_CURRENT_PASSWORD(HttpStatus.UNAUTHORIZED, "Current password is incorrect"),
     VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "Validation failed"),
 
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong"),

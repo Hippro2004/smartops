@@ -37,22 +37,21 @@ public class RefreshTokenService {
 
         RefreshToken t = new RefreshToken();
         t.setUser(user);
-        t.setTokenHash(hash(raw)); // เก็บเฉพาะ hash ไม่เก็บค่าจริง
+        t.setTokenHash(hash(raw)); // Store only the hash, never the raw token.
         t.setExpiresAt(Instant.now().plus(props.refreshTtlDays(), ChronoUnit.DAYS));
         repo.save(t);
         return raw;
     }
 
-    /** ตรวจแล้วยกเลิกตัวเดิม (rotation) คืน user เจ้าของ ใช้ซ้ำไม่ได้ */
-    // noRollbackFor: ไม่งั้นการยกเลิกทั้งหมดตอนตรวจเจอการใช้ซ้ำจะถูก rollback
-    // ตอนโยน exception
+    /** Validate and revoke the current token (rotation), then return its owner. */
+    // Without noRollbackFor, revocation would roll back when token reuse is detected.
     @Transactional(noRollbackFor = BusinessException.class)
     public User consume(String raw) {
         RefreshToken t = repo.findByTokenHash(hash(raw))
                 .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_REFRESH_TOKEN));
 
         if (t.getRevokedAt() != null) {
-            // token ที่ใช้ไปแล้วถูกส่งมาอีก = อาจถูกขโมย ยกเลิกทุก session ของ user นี้
+            // Reuse may indicate token theft; revoke all sessions for this user.
             repo.revokeAllByUserId(t.getUser().getId(), Instant.now());
             throw new BusinessException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
