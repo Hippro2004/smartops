@@ -1,26 +1,20 @@
 import LoginForm from "@/src/components/auth/LoginForm";
-import Link from "next/link";
+import AuthShell from "@/src/components/auth/AuthShell";
+import ProgressLink from "@/src/components/ui/ProgressLink";
 
 export default function LoginPage() {
     return (
-        <main className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-                <div className="text-center mb-8">
-                    <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Login</h1>
-                    <p className="text-sm text-gray-500 mt-1">SmartOps IT Asset Management</p>
-                </div>
-
+        <AuthShell title="ยินดีต้อนรับกลับ" description="เข้าสู่ระบบเพื่อจัดการอุปกรณ์และข้อมูลใน workspace ของคุณ">
                 <LoginForm />
-                <p className="mt-4 text-center text-sm text-gray-600">
+                <p className="mt-6 border-t border-slate-100 pt-5 text-center text-sm text-slate-500">
                     ยังไม่มีบัญชี?{' '}
-                    <Link
+                    <ProgressLink
                         href="/register"
-                        className="font-semibold text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+                        className="font-semibold text-blue-700 hover:text-blue-800 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
                     >
                         สมัครสมาชิก
-                    </Link>
+                    </ProgressLink>
                 </p>
-            </div>
-        </main>)
-
+        </AuthShell>
+    );
 }

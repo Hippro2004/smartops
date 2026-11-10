@@ -8,6 +8,7 @@ import {
   AssetResponse,
   PageResponse,
 } from "@/src/types/assets/asset";
+import { loadingStore } from "./loadingStore";
 
 let refreshing: Promise<string | null> | null = null;
 
@@ -17,6 +18,7 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
+  loadingStore.start();
   const isAuthPath = config.url?.startsWith("/auth/");
   const token = tokens.access();
   if (token && !isAuthPath) {
@@ -26,8 +28,12 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    loadingStore.end();
+    return res;
+  },
   async (error) => {
+    loadingStore.end();
     const original = error.config as typeof error.config & {
       _retried?: boolean;
     };
@@ -119,7 +125,9 @@ export const fileApi = {
   upload: async (file: File) => {
     const form = new FormData();
     form.append("file", file);
-    const res = await api.post<{ filename: string }>("/files/upload", form);
+    const res = await api.post<{ filename: string }>("/files/upload", form, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     return res.data.filename;
   },
 };

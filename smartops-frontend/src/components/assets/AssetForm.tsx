@@ -5,6 +5,7 @@ import { ASSET_CATEGORIES, ASSET_STATUSES, AssetRequest } from '@/src/types/asse
 import { useState } from 'react';
 import ImageUploader from './ImageUploader';
 import { validateAsset } from '@/src/lib/common/validate/validator';
+import LoadingButton from '../ui/LoadingButton';
 
 
 interface Props {
@@ -54,94 +55,142 @@ export default function AssetForm({ asset, onSubmit, onCancel }: Props) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">ชื่ออุปกรณ์</label>
-                <input
-                    type="text"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full border p-2 rounded"
-                />
-            </div>
-
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Serial Number</label>
-                <input
-                    type="text"
-                    value={form.serialNumber}
-                    onChange={(e) => setForm({ ...form, serialNumber: e.target.value })}
-                    className="w-full border p-2 rounded font-mono"
-                />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">หมวด</label>
-                    <select
-                        value={form.category ?? ''}
-                        onChange={(e) =>
-                            setForm({ ...form, category: e.target.value as AssetRequest['category'] })
-                        }
-                        className="w-full border p-2 rounded"
-                    >
-                        {ASSET_CATEGORIES.map((c) => (
-                            <option key={c} value={c}>{c}</option>
-                        ))}
-                    </select>
-                </div>
-
-                {isEdit && (
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">สถานะ</label>
-                        <select
-                            value={form.status}
-                            onChange={(e) =>
-                                setForm({ ...form, status: e.target.value as AssetRequest['status'] })
-                            }
-                            className="w-full border p-2 rounded"
-                        >
-                            {ASSET_STATUSES.map((s) => (
-                                <option key={s} value={s}>{s}</option>
-                            ))}
-                        </select>
+        <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid gap-6 md:grid-cols-[minmax(0,1.35fr)_minmax(250px,0.9fr)]">
+                <section className="space-y-5">
+                    <div className="space-y-1">
+                        <h3 className="text-sm font-semibold text-slate-900">ข้อมูลอุปกรณ์</h3>
+                        <p className="text-xs text-slate-500">ระบุชื่อและรหัสสำหรับค้นหาอุปกรณ์</p>
                     </div>
-                )}
+
+                    <div className="space-y-4">
+                        <div>
+                            <label htmlFor="asset-name" className="mb-1.5 block text-sm font-medium text-slate-700">
+                                ชื่ออุปกรณ์ <span className="text-rose-500">*</span>
+                            </label>
+                            <input
+                                id="asset-name"
+                                type="text"
+                                value={form.name}
+                                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                                placeholder="เช่น MacBook Pro 14-inch"
+                                autoComplete="off"
+                                className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="asset-serial" className="mb-1.5 block text-sm font-medium text-slate-700">
+                                Serial Number <span className="text-rose-500">*</span>
+                            </label>
+                            <input
+                                id="asset-serial"
+                                type="text"
+                                value={form.serialNumber}
+                                onChange={(e) => setForm({ ...form, serialNumber: e.target.value })}
+                                placeholder="เช่น C02XYZ123ABC"
+                                autoComplete="off"
+                                className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 font-mono text-sm text-slate-900 outline-none transition placeholder:font-sans placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                            />
+                            <p className="mt-1.5 text-xs text-slate-500">ใช้ระบุอุปกรณ์แต่ละชิ้นและต้องไม่ซ้ำกัน</p>
+                        </div>
+
+                        <div>
+                            <label htmlFor="asset-description" className="mb-1.5 block text-sm font-medium text-slate-700">
+                                รายละเอียด <span className="text-rose-500">*</span>
+                            </label>
+                            <textarea
+                                id="asset-description"
+                                value={form.description}
+                                onChange={(e) => setForm({ ...form, description: e.target.value })}
+                                rows={4}
+                                placeholder="ระบุสเปกหรือรายละเอียดเพิ่มเติมของอุปกรณ์"
+                                className="w-full resize-y rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                            />
+                        </div>
+                    </div>
+                </section>
+
+                <section className="space-y-5">
+                    <div className="space-y-1">
+                        <h3 className="text-sm font-semibold text-slate-900">จัดหมวดหมู่และรูปภาพ</h3>
+                        <p className="text-xs text-slate-500">ช่วยให้แยกประเภทและระบุอุปกรณ์ได้ง่ายขึ้น</p>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div>
+                            <label htmlFor="asset-category" className="mb-1.5 block text-sm font-medium text-slate-700">
+                                หมวดหมู่ <span className="text-rose-500">*</span>
+                            </label>
+                            <select
+                                id="asset-category"
+                                value={form.category ?? ''}
+                                onChange={(e) =>
+                                    setForm({ ...form, category: e.target.value as AssetRequest['category'] })
+                                }
+                                className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                            >
+                                {ASSET_CATEGORIES.map((category) => (
+                                    <option key={category} value={category}>{category}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {isEdit && (
+                            <div>
+                                <label htmlFor="asset-status" className="mb-1.5 block text-sm font-medium text-slate-700">
+                                    สถานะ
+                                </label>
+                                <select
+                                    id="asset-status"
+                                    value={form.status}
+                                    onChange={(e) =>
+                                        setForm({ ...form, status: e.target.value as AssetRequest['status'] })
+                                    }
+                                    className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                                >
+                                    {ASSET_STATUSES.map((status) => (
+                                        <option key={status} value={status}>{status}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
+
+                        <ImageUploader
+                            value={form.image}
+                            onChange={(image) => setForm((f) => ({ ...f, image }))}
+                            onUploadingChange={setUploading}
+                        />
+                    </div>
+                </section>
             </div>
 
-            <ImageUploader
-                value={form.image}
-                onChange={(image) => setForm((f) => ({ ...f, image }))}
-                onUploadingChange={setUploading}
-            />
+            {error && (
+                <div role="alert" className="flex items-start gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+                    <svg viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm-.75-11a.75.75 0 0 1 1.5 0v4a.75.75 0 0 1-1.5 0V7Zm.75 8.25a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clipRule="evenodd" />
+                    </svg>
+                    <p>{error}</p>
+                </div>
+            )}
 
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">รายละเอียด (สเปก)</label>
-                <textarea
-                    value={form.description}
-                    onChange={(e) => setForm({ ...form, description: e.target.value })}
-                    rows={3}
-                    className="w-full border p-2 rounded"
-                />
-            </div>
-
-            {error && <p className="text-red-600 text-sm">{error}</p>}
-
-            <div className="flex justify-end gap-3">
+            <div className="-mx-5 flex flex-col-reverse gap-3 border-t border-slate-100 px-5 pt-5 sm:-mx-7 sm:flex-row sm:justify-end sm:px-7">
                 <button
                     type="button"
                     onClick={onCancel}
-                    className="px-4 py-2 rounded border text-gray-600 hover:bg-gray-50"
+                    className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200"
                 >
                     ยกเลิก
                 </button>
-                <button
+                <LoadingButton
                     type="submit"
-                    disabled={submitting}
-                    className="px-4 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 disabled:opacity-50"
+                    loading={submitting}
+                    disabled={uploading}
+                    loadingText="กำลังบันทึก..."
+                    className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-600/20 transition hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                 >
-                    {submitting ? 'กำลังบันทึก...' : 'บันทึก'}
-                </button>
+                    {isEdit ? 'บันทึกการแก้ไข' : 'เพิ่มอุปกรณ์'}
+                </LoadingButton>
             </div>
         </form>
     );

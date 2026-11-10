@@ -1,4 +1,5 @@
 import { AuthProvider } from '../components/auth/AuthProvider';
+import TopProgressBar from '../components/ui/TopProgressBar';
 import './globals.css';
 
 export default function RootLayout({
@@ -9,6 +10,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
+                <TopProgressBar></TopProgressBar>
                 <AuthProvider> {children}</AuthProvider>
             </body>
         </html>

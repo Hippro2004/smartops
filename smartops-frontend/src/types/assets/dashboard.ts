@@ -7,7 +7,7 @@ export interface DashboardStats {
   totalAssets: number;
   available: number;
   inUse: number;
-  retried: number;
+  retired: number;
   totalUsers: number;
   byCategory: CategoryCount[];
 }

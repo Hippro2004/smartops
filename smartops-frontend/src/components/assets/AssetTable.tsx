@@ -5,60 +5,81 @@ import { fileUrl } from "@/src/lib/core/file";
 interface Props {
     assets: AssetResponse[];
     canEdit: boolean;
+    deletingId: number | null;
     onEdit: (asset: AssetResponse) => void;
     onDelete: (asset: AssetResponse) => void;
 }
 
-export default function AssetTable({ assets, canEdit, onEdit, onDelete }: Props) {
+export default function AssetTable({ assets, canEdit, deletingId, onEdit, onDelete }: Props) {
     if (assets.length === 0) {
-        return <p className="p-6 text-center text-gray-500">ยังไม่มีอุปกรณ์</p>;
+        return (
+            <div className="flex flex-col items-center px-6 py-16 text-center">
+                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
+                    <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7" aria-hidden="true">
+                        <rect x="4" y="5" width="16" height="14" rx="2" stroke="currentColor" strokeWidth="1.6" />
+                        <path d="M8 9h8M8 12h5m-5 3h8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                    </svg>
+                </span>
+                <p className="mt-4 font-semibold text-slate-800">ยังไม่มีอุปกรณ์</p>
+                <p className="mt-1 text-sm text-slate-500">อุปกรณ์ที่เพิ่มจะแสดงอยู่ในรายการนี้</p>
+            </div>
+        );
     }
 
     return (
         <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full border-collapse text-left">
                 <thead>
-                    <tr className="bg-gray-100 border-b text-gray-600 text-sm">
-                        <th className="p-3">รูป</th>
-                        <th className="p-3">ID</th>
-                        <th className="p-3">ชื่ออุปกรณ์</th>
-                        <th className="p-3">Serial Number</th>
-                        <th className="p-3">หมวด</th>
-                        <th className="p-3">สถานะ</th>
-                        {canEdit && <th className="p-3 text-right">จัดการ</th>}
+                    <tr className="border-b border-slate-200 bg-slate-50/80 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        <th className="px-4 py-3.5">รูป</th>
+                        <th className="px-4 py-3.5">ID</th>
+                        <th className="px-4 py-3.5">ชื่ออุปกรณ์</th>
+                        <th className="px-4 py-3.5">Serial Number</th>
+                        <th className="px-4 py-3.5">หมวด</th>
+                        <th className="px-4 py-3.5">สถานะ</th>
+                        {canEdit && <th className="px-4 py-3.5 text-right">จัดการ</th>}
                     </tr>
                 </thead>
                 <tbody>
                     {assets.map((asset) => (
-                        <tr key={asset.id} className="border-b hover:bg-gray-50">
-                            <td className="p-3">
+                        <tr key={asset.id} className="border-b border-slate-100 transition hover:bg-blue-50/30">
+                            <td className="px-4 py-3">
                                 {asset.image ? (
                                     // eslint-disable-next-line @next/next/no-img-element
                                     <img
                                         src={fileUrl(asset.image)}
                                         alt={asset.name}
-                                        className="h-10 w-10 rounded object-cover"
+                                        className="h-11 w-11 rounded-xl border border-slate-200 object-cover"
                                     />
                                 ) : (
-                                    <div className="h-10 w-10 rounded bg-gray-100" />
+                                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-400">
+                                        <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
+                                            <rect x="4" y="5" width="16" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                                            <path d="m6 16 4-4 3 3 2-2 3 3" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+                                        </svg>
+                                    </div>
                                 )}
                             </td>
-                            <td className="p-3">#{asset.id}</td>
-                            <td className="p-3 font-medium">{asset.name}</td>
-                            <td className="p-3 text-gray-600 font-mono text-sm">{asset.serialNumber}</td>
-                            <td className="p-3">
-                                <span className="bg-gray-200 px-2 py-1 rounded text-xs">{asset.category}</span>
+                            <td className="px-4 py-3 text-sm tabular-nums text-slate-400">#{asset.id}</td>
+                            <td className="px-4 py-3 text-sm font-semibold text-slate-800">{asset.name}</td>
+                            <td className="px-4 py-3 font-mono text-xs text-slate-500">{asset.serialNumber}</td>
+                            <td className="px-4 py-3">
+                                <span className="inline-flex rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">{asset.category}</span>
                             </td>
-                            <td className="p-3">
+                            <td className="px-4 py-3">
                                 <StatusBadge status={asset.status} />
                             </td>
                             {canEdit && (
-                                <td className="p-3 text-right space-x-3 text-sm">
-                                    <button onClick={() => onEdit(asset)} className="text-blue-600 hover:underline">
+                                <td className="space-x-3 px-4 py-3 text-right text-sm">
+                                    <button onClick={() => onEdit(asset)} className="rounded-lg px-2 py-1.5 font-medium text-blue-700 transition hover:bg-blue-50">
                                         แก้ไข
                                     </button>
-                                    <button onClick={() => onDelete(asset)} className="text-red-600 hover:underline">
-                                        ลบ
+                                    <button
+                                        onClick={() => onDelete(asset)}
+                                        disabled={deletingId === asset.id}
+                                        className="rounded-lg px-2 py-1.5 font-medium text-rose-600 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60"
+                                    >
+                                        {deletingId === asset.id ? 'กำลังลบ...' : 'ลบ'}
                                     </button>
                                 </td>
                             )}

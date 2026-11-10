@@ -45,48 +45,58 @@ export default function ImageUploader({ value, onChange, onUploadingChange }: Pr
 
     return (
         <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">รูปภาพ</label>
-
-            <div className="flex items-center gap-4">
-                <div className="h-24 w-24 shrink-0 overflow-hidden rounded border bg-gray-50 flex items-center justify-center text-xs text-gray-400">
-                    {value ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={fileUrl(value)} alt="" className="h-full w-full object-cover" />
-                    ) : (
-                        'ไม่มีรูป'
-                    )}
+            <p className="mb-1.5 block text-sm font-medium text-slate-700">รูปภาพ</p>
+            <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/80 p-4 transition hover:border-blue-300 hover:bg-blue-50/30">
+                <input
+                    ref={inputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    onChange={handleFile}
+                    className="hidden"
+                />
+                <div className="flex items-center gap-3">
+                    <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-400">
+                        {value ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={fileUrl(value)} alt="ตัวอย่างรูปอุปกรณ์" className="h-full w-full object-cover" />
+                        ) : (
+                            <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7" aria-hidden="true">
+                                <path d="M4 7.5A1.5 1.5 0 0 1 5.5 6h13A1.5 1.5 0 0 1 20 7.5v10a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5v-10Z" stroke="currentColor" strokeWidth="1.6" />
+                                <circle cx="9" cy="10" r="1.5" stroke="currentColor" strokeWidth="1.6" />
+                                <path d="m5 17 4-4 3 3 2-2 5 4" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+                            </svg>
+                        )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-slate-800">
+                            {value ? 'เพิ่มรูปภาพแล้ว' : 'เพิ่มรูปภาพอุปกรณ์'}
+                        </p>
+                        <p className="mt-0.5 text-xs leading-5 text-slate-500">
+                            JPG, PNG หรือ WEBP · ไม่เกิน 5 MB
+                        </p>
+                    </div>
                 </div>
-
-                <div className="space-y-2">
-                    <input
-                        ref={inputRef}
-                        type="file"
-                        accept="image/jpeg,image/png,image/webp"
-                        onChange={handleFile}
-                        className="hidden"
-                    />
+                <div className="mt-3 flex flex-wrap items-center gap-2">
                     <button
                         type="button"
                         onClick={() => inputRef.current?.click()}
                         disabled={uploading}
-                        className="px-3 py-1.5 rounded border text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                        className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-blue-300 hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        {uploading ? 'กำลังอัปโหลด...' : value ? 'เปลี่ยนรูป' : 'เลือกรูป'}
+                        {uploading ? 'กำลังอัปโหลด...' : value ? 'เปลี่ยนรูปภาพ' : 'เลือกไฟล์'}
                     </button>
-
                     {value && !uploading && (
                         <button
                             type="button"
                             onClick={() => onChange(null)}
-                            className="block text-sm text-red-600 hover:underline"
+                            className="rounded-lg px-3 py-2 text-xs font-medium text-rose-600 transition hover:bg-rose-50 focus:outline-none focus:ring-4 focus:ring-rose-500/10"
                         >
-                            ลบรูป
+                            ลบรูปภาพ
                         </button>
                     )}
                 </div>
             </div>
-
-            {error && <p className="text-red-600 text-sm mt-1">{error}</p>}
+            {error && <p role="alert" className="mt-2 text-xs text-rose-600">{error}</p>}
         </div>
     );
 }
