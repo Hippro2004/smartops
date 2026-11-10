@@ -55,8 +55,12 @@ export function vaildateLogin(form: LoginInput): string | null {
   const password = form.password.trim();
 
   if (username.length === 0) return "กรุณากรอกชื่อผู้ใช้";
+  if (username.length < 9 || username.length > 33)
+    return "กรอกชื่อผู้ใช้งาน 8 - 32 อักษร";
 
   if (password.length === 0) return "กรุณากรอกรหัสผ่าน";
+  if (password.length < 9 || password.length > 33)
+    return "กรอกรหัสผ่าน 8 - 32 อักษร";
 
   return null;
 }
@@ -71,6 +75,7 @@ export function validateAsset(asset: AssetRequest): string | null {
   if (name.length > 100) return "ชื่ออุปกรณ์ต้องไม่เกิน 100 ตัวอักษร";
   if (serial.length === 0) return "กรุณากรอก Serial Number";
   if (/\s/.test(serial)) return "Serial Number ห้ามมีช่องว่าง";
+  if (!category) return "กรุณาเลือกหมวดหมู่";
   if (description.length === 0) return "กรุณากรอกรายละเอียดอธิบายเพิ่มเติม";
 
   return null;
