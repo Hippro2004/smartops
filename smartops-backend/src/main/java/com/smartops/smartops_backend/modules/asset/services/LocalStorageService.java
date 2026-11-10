@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -19,6 +21,8 @@ import com.smartops.smartops_backend.common.exceptions.ErrorCode;
 
 @Service
 public class LocalStorageService implements StorageService {
+
+    private static final Logger log = LoggerFactory.getLogger(LocalStorageService.class);
 
     private static final Map<String, String> ALLOWED = Map.of(
             "image/jpeg", "jpg",
@@ -74,7 +78,7 @@ public class LocalStorageService implements StorageService {
         try {
             Files.deleteIfExists(file);
         } catch (IOException e) {
-            // ลบไม่ได้ไม่ควรทำให้คำขอหลักล้มเหลว (ควร log ไว้)
+            log.warn("Could not delete uploaded file {}", filename, e);
         }
     }
 }

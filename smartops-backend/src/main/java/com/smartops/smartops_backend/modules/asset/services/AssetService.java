@@ -70,7 +70,11 @@ public class AssetService {
 
     @Transactional
     public void deleteAssetById(Long id) {
-        assetRepo.deleteById(id);
+        Asset asset = assetRepo.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.ASSET_NOT_FOUND));
+
+        assetRepo.delete(asset);
+        storageService.delete(asset.getImage());
     }
 
     @Transactional
@@ -92,21 +96,12 @@ public class AssetService {
 
         asset.setName(request.getName());
         asset.setSerialNumber(request.getSerialNumber());
+        asset.setStatus(request.getStatus());
+        asset.setImage(request.getImage());
         asset.setCategory(request.getCategory());
         asset.setDescription(request.getDescription());
 
         return asset;
-    }
-
-    @Transactional
-    public void deleteAsset(long id) {
-        Asset asset = assetRepo.findById(id).orElseThrow(() -> new BusinessException(ErrorCode.ASSET_NOT_FOUND));
-
-        if (!assetRepo.existsById(asset.getId()))
-            throw new BusinessException(ErrorCode.ASSET_NOT_FOUND);
-
-        assetRepo.deleteById(id);
-        storageService.delete(asset.getImage());
     }
 
     @Transactional

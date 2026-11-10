@@ -5,7 +5,7 @@ import java.util.List;
 public record DashboardStats(
         long totalAssets,
         long available,
-        long inUser,
+        long inUse,
         long retired,
         long totalUsers,
         List<CategoryCount> byCategory) {
