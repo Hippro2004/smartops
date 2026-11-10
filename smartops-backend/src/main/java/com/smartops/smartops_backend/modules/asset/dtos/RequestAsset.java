@@ -7,6 +7,7 @@ import com.smartops.smartops_backend.modules.asset.entities.AssetStatus;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class RequestAsset {
     @NotBlank
     private String serialNumber;
 
-    @NotBlank
+    @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\.(jpg|png|webp)$")
     private String image;
 
     @NotNull
