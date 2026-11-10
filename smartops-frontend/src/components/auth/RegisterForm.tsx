@@ -1,8 +1,8 @@
 'use client';
 
+import { getErrorMessage } from "@/src/lib/common/exceptions/errors";
+import { validateRegister } from "@/src/lib/common/validate/validator";
 import { authApi } from "@/src/lib/core/api";
-import { getErrorMessage } from "@/src/lib/errors";
-import { validateRegister } from "@/src/lib/validator";
 import { RegisterInput } from "@/src/types/auth";
 import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";

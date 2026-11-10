@@ -16,7 +16,7 @@ export interface AssetRequest {
   name: string;
   serialNumber: string;
   image: string | null;
-  category: AssetCategory;
+  category: AssetCategory | null;
   status: AssetStatus;
   description: string;
 }

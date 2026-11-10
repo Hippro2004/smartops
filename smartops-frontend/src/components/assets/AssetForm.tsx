@@ -4,23 +4,13 @@ import { getErrorMessage } from '@/src/lib/common/exceptions/errors';
 import { ASSET_CATEGORIES, ASSET_STATUSES, AssetRequest } from '@/src/types/assets/asset';
 import { useState } from 'react';
 import ImageUploader from './ImageUploader';
+import { validateAsset } from '@/src/lib/common/validate/validator';
 
 
 interface Props {
     asset?: AssetRequest | null;          // มี = โหมดแก้ไข, ไม่มี = โหมดเพิ่ม
     onSubmit: (data: AssetRequest) => Promise<void>;
     onCancel: () => void;
-}
-
-function validate(f: AssetRequest): string | null {
-    const name = f.name.trim();
-    const serial = f.serialNumber.trim();
-
-    if (name.length === 0) return 'กรุณากรอกชื่ออุปกรณ์';
-    if (name.length > 100) return 'ชื่ออุปกรณ์ต้องไม่เกิน 100 ตัวอักษร';
-    if (serial.length === 0) return 'กรุณากรอก Serial Number';
-    if (/\s/.test(serial)) return 'Serial Number ห้ามมีช่องว่าง';
-    return null;
 }
 
 export default function AssetForm({ asset, onSubmit, onCancel }: Props) {
@@ -42,7 +32,7 @@ export default function AssetForm({ asset, onSubmit, onCancel }: Props) {
         e.preventDefault();
         setError(null);
 
-        const message = validate(form);
+        const message = validateAsset(form);
         if (message) {
             setError(message);
             return;
@@ -89,7 +79,7 @@ export default function AssetForm({ asset, onSubmit, onCancel }: Props) {
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">หมวด</label>
                     <select
-                        value={form.category}
+                        value={form.category ?? ''}
                         onChange={(e) =>
                             setForm({ ...form, category: e.target.value as AssetRequest['category'] })
                         }

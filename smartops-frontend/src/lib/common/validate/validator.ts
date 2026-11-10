@@ -1,4 +1,5 @@
-import { LoginInput, RegisterInput } from "../types/auth";
+import { AssetRequest } from "@/src/types/assets/asset";
+import { LoginInput, RegisterInput } from "@/src/types/auth";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^0\d{9}$/;
@@ -56,6 +57,21 @@ export function vaildateLogin(form: LoginInput): string | null {
   if (username.length === 0) return "กรุณากรอกชื่อผู้ใช้";
 
   if (password.length === 0) return "กรุณากรอกรหัสผ่าน";
+
+  return null;
+}
+
+export function validateAsset(asset: AssetRequest): string | null {
+  const name = asset.name.trim();
+  const serial = asset.serialNumber.trim();
+  const description = asset.description.trim();
+  const category = asset.category;
+
+  if (name.length === 0) return "กรุณากรอกชื่ออุปกรณ์";
+  if (name.length > 100) return "ชื่ออุปกรณ์ต้องไม่เกิน 100 ตัวอักษร";
+  if (serial.length === 0) return "กรุณากรอก Serial Number";
+  if (/\s/.test(serial)) return "Serial Number ห้ามมีช่องว่าง";
+  if (description.length === 0) return "กรุณากรอกรายละเอียดอธิบายเพิ่มเติม";
 
   return null;
 }
