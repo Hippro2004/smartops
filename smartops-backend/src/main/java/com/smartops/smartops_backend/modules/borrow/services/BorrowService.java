@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.smartops.smartops_backend.modules.asset.entities.Asset;
 import com.smartops.smartops_backend.modules.asset.services.AssetService;
-import com.smartops.smartops_backend.modules.borrow.dtos.RequestBorrow;
+import com.smartops.smartops_backend.modules.borrow.dtos.BorrowRequest;
 import com.smartops.smartops_backend.modules.borrow.entities.BorrowRecord;
 import com.smartops.smartops_backend.modules.borrow.entities.BorrowStatus;
 import com.smartops.smartops_backend.modules.borrow.repositories.BorrowRepo;
@@ -54,7 +54,7 @@ public class BorrowService {
 
     // }
     @Transactional
-    public BorrowRecord createBorrow(RequestBorrow request, Long userId) {
+    public BorrowRecord createBorrow(BorrowRequest request, Long userId) {
         User user = userService.getById(userId);
         Asset asset = assetService.getById(request.getAssetId());
 

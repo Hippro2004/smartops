@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.smartops.smartops_backend.common.dtos.PageResponse;
 import com.smartops.smartops_backend.modules.borrow.dtos.BorrowResponse;
-import com.smartops.smartops_backend.modules.borrow.dtos.RequestBorrow;
+import com.smartops.smartops_backend.modules.borrow.dtos.BorrowRequest;
 import com.smartops.smartops_backend.modules.borrow.entities.BorrowRecord;
 import com.smartops.smartops_backend.modules.borrow.services.BorrowService;
 
@@ -41,28 +41,24 @@ public class BorrowController {
     // .status(borrow.getStatus().name())
     // .build());
 
-    @PostMapping("/create")
-    public ResponseEntity<BorrowResponse> createBorrow(@AuthenticationPrincipal Jwt jwt,
-            @RequestBody @Validated RequestBorrow request) {
-        Long userId = Long.valueOf(jwt.getSubject());
-        BorrowRecord borrow = borrowService.createBorrow(request, userId);
-        return ResponseEntity.ok(BorrowResponse.builder()
-                .assetName(borrow.getAsset().getName())
-                .borrowedAt(borrow.getBorrowedAt())
-                .status(borrow.getStatus().name())
-                .build());
+    private BorrowResponse toResponse(BorrowRecord b) {
+        return new BorrowResponse(b.getAsset().getName(), b.getBorrowedAt(), b.getStatus());
     }
 
-    @GetMapping("/{username}")
+    @PostMapping("/create")
+    public ResponseEntity<BorrowResponse> createBorrow(@AuthenticationPrincipal Jwt jwt,
+            @RequestBody @Validated BorrowRequest request) {
+        Long userId = Long.valueOf(jwt.getSubject());
+        BorrowRecord borrow = borrowService.createBorrow(request, userId);
+        return ResponseEntity.ok(toResponse(borrow));
+    }
+
+    @GetMapping("/my-borroweds/{username}")
     public PageResponse<BorrowResponse> getMyBorrowed(
             @PathVariable Long userId,
             @PageableDefault(sort = "borrowedAt", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<BorrowResponse> page = borrowService.getListBorrowByUserId(userId, pageable)
-                .map(b -> BorrowResponse.builder()
-                        .assetName(b.getAsset().getName())
-                        .borrowedAt(b.getBorrowedAt())
-                        .status(b.getStatus().toString())
-                        .build());
+                .map(this::toResponse);
         return PageResponse.from(page);
     }
 

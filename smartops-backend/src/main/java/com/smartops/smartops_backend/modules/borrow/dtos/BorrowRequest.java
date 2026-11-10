@@ -13,15 +13,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestBorrow {
+public class BorrowRequest {
 
     // @NotNull
     // private Long userId;
 
-    @NotNull
+    @NotNull(message = "กรุณากรอกรหัสสินทรัพย์")
     private Long assetId;
 
-    @NotNull
+    @NotNull(message = "กรุณาใส่เวลา")
     @Future
     private Instant dueAt;
 
