@@ -78,11 +78,12 @@ public class AssetController {
 
     private AssetResponse toResponse(Asset a) {
         return new AssetResponse(
+                a.getId(),
                 a.getName(),
                 a.getSerialNumber(),
                 a.getImage(),
-                a.getCategory().name(),
-                a.getStatus().name(),
+                a.getCategory(),
+                a.getStatus(),
                 a.getDescription());
     }
 

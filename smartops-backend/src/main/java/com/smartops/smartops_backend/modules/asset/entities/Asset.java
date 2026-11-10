@@ -42,5 +42,6 @@ public class Asset {
     @Column(nullable = false)
     private AssetStatus status;
 
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 }

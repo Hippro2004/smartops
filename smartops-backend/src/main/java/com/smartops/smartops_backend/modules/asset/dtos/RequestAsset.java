@@ -3,6 +3,7 @@ package com.smartops.smartops_backend.modules.asset.dtos;
 import org.springframework.stereotype.Service;
 
 import com.smartops.smartops_backend.modules.asset.entities.AssetCatetory;
+import com.smartops.smartops_backend.modules.asset.entities.AssetStatus;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,10 +28,13 @@ public class RequestAsset {
     @NotBlank
     private String image;
 
-    @NotBlank
-    private String description;
-
     @NotNull
     private AssetCatetory catetory;
+
+    @NotNull
+    private AssetStatus status;
+
+    @NotBlank
+    private String description;
 
 }
