@@ -25,6 +25,9 @@ public class RequestAsset {
     private String serialNumber;
 
     @NotBlank
+    private String image;
+
+    @NotBlank
     private String description;
 
     @NotNull

@@ -31,6 +31,9 @@ public class Asset {
     @Column(nullable = false, unique = true)
     private String serialNumber;
 
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String image;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AssetCatetory category;

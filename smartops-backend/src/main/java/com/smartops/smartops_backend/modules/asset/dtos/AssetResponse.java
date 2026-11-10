@@ -4,10 +4,11 @@ import lombok.Builder;
 
 @Builder
 public record AssetResponse(
-        String name,
-        String serialNumber,
-        String categoryName,
-        String status,
-        String description) {
+                String name,
+                String serialNumber,
+                String image,
+                String categoryName,
+                String status,
+                String description) {
 
 }

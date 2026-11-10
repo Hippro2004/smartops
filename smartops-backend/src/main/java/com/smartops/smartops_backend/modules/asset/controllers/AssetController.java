@@ -80,6 +80,7 @@ public class AssetController {
         return new AssetResponse(
                 a.getName(),
                 a.getSerialNumber(),
+                a.getImage(),
                 a.getCategory().name(),
                 a.getStatus().name(),
                 a.getDescription());

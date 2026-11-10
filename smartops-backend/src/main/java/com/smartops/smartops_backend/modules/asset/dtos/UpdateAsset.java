@@ -21,6 +21,9 @@ public class UpdateAsset {
     @NotBlank
     private String serialNumber;
 
+    @NotBlank
+    private String image;
+
     @NotNull
     private AssetCatetory category;
 

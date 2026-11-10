@@ -75,7 +75,7 @@ public class AssetService {
             throw new BusinessException(ErrorCode.ASSET_NAME_TAKEN);
         }
 
-        if (assetRepo.existsBySerialNumberAndIdNot(request.getSerialNumber(), id)) {
+        if (assetRepo.existsBySerialNumberAndIdNot(request.getSerialNumber().trim(), id)) {
             throw new BusinessException(ErrorCode.ASSET_SERIAL_TAKEN);
         }
 
@@ -85,6 +85,13 @@ public class AssetService {
         asset.setDescription(request.getDescription());
 
         return asset;
+    }
+
+    @Transactional
+    public void deleteAsset(long id) {
+        if (!assetRepo.existsById(id))
+            throw new BusinessException(ErrorCode.ASSET_NOT_FOUND);
+        assetRepo.deleteById(id);
     }
 
     @Transactional
