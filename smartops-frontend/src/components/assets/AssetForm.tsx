@@ -130,6 +130,9 @@ export default function AssetForm({ asset, onSubmit, onCancel }: Props) {
                                 }
                                 className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                             >
+                                <option value="" disabled>
+                                    กรุณาเลือกหมวดหมู่
+                                </option>
                                 {ASSET_CATEGORIES.map((category) => (
                                     <option key={category} value={category}>{category}</option>
                                 ))}
